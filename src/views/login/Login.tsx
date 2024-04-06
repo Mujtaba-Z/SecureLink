@@ -1,38 +1,58 @@
 import React, { useState } from "react";
-import {Button, Text, Keyboard, View, StyleSheet, Image, Dimensions, TextInput} from "react-native";
+import { Button, Text, View, StyleSheet, TextInput } from "react-native";
+import { Login, Register } from "../../controller/login/Login.tsx";
 
 const LoginPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = async () => {
+    try {
+      const user = await Login(email, password);
+      console.log(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleRegister = async () => {
+    try {
+      const user = await Register(email, password);
+      console.log(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText} />
-      </View>
       <View style={styles.inputContainer}>
         <TextInput
-          leftIcon=""
-          rightIcon=""
           placeholder="Email"
-          /*onChangeText={}*/
+          value={email}
+          onChangeText={setEmail}
+          style={styles.textInput}
         />
         <TextInput
-          leftIcon=""
-          rightIcon=""
-          secureTextEntry={true}
           placeholder="Password"
-          /*onChangeText={}*/
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={true}
+          style={styles.textInput}
         />
         <View style={styles.loginButtonContainer}>
           <Button
             title="Login"
-            /*onPress={}*/
+            onPress={handleLogin}
             borderRadius={15}
             width={280}
             height={40}
           />
+        </View>
+        <View style={styles.registerButtonContainer}>
           <Button
             title="Register"
-            /*onPress={}*/
+            onPress={handleRegister}
             borderRadius={15}
             width={280}
             height={40}
@@ -49,35 +69,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  backgroundImage: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    resizeMode: 'cover',
-    opacity: 0.7,
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height + 50,
-  },
-  header: {
-    position: 'absolute',
-    top: 270,
-    alignItems: 'center',
-    zIndex: 1,
-  },
-  headerText: {
-    fontSize: 30,
-    color: 'black',
-    fontWeight: 'bold',
-    textShadowColor: 'white',
-    textShadowOffset: {width: 0, height: 0},
-    textShadowRadius: 10,
-  },
   inputContainer: {
-    position: 'absolute',
-    top: 320,
     width: '80%',
     alignItems: 'center',
-    zIndex: 1,
   },
   textInput: {
     width: 280,
