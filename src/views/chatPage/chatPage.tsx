@@ -59,10 +59,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   message: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#82b0f5',
     padding: 10,
     borderRadius: 10,
     marginVertical: 4,
+    alignSelf: 'flex-end',
+    fontSize: 18,
   },
   inputContainer: {
     flexDirection: 'row',
