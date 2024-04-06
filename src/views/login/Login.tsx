@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Button, Text, View, StyleSheet, TextInput } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 import { Login, Register } from "../../controller/login/Login.tsx";
 
 const LoginPage = () => {
+  const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -10,6 +12,7 @@ const LoginPage = () => {
     try {
       const user = await Login(email, password);
       console.log(user);
+      navigation.navigate('Home');
     } catch (error) {
       console.log(error);
     }
