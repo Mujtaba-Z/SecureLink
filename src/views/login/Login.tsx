@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Text, View, StyleSheet, TextInput } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { Login, Register } from "../../controller/login/Login.tsx";
+import UserInformation from "../../model/UserInformation.js";
 
 const LoginPage = () => {
   const navigation = useNavigation();
@@ -20,7 +21,18 @@ const LoginPage = () => {
 
   const handleRegister = async () => {
     try {
-      const user = await Register(email, password);
+      const userInfo = new UserInformation(
+        '', // employeeID
+        '', // name
+        email,
+        password,
+        '', // section
+        '', // title
+        '', // phoneNum
+        '', // teamName
+        ''  // DOB
+      );
+      const user = await Register(userInfo);
       console.log(user);
     } catch (error) {
       console.log(error);
