@@ -1,10 +1,14 @@
 {
     "logs": [
         {
-            "outputFile": "com.awesomeproject.app-mergeDebugResources-26:/values-v18/values-v18.xml",
+            "outputFile": "com.awesomeproject.app-mergeDebugResources-38:/values-v18/values-v18.xml",
             "map": [
                 {
+<<<<<<< HEAD
                     "source": "C:\\Users\\Manan\\.gradle\\caches\\transforms-3\\b3627ca143232ec2ceb6e319eb18971d\\transformed\\appcompat-1.6.1\\res\\values-v18\\values-v18.xml",
+=======
+                    "source": "/Users/kfmoi/.gradle/caches/transforms-3/858dc591faff319c774fa62ec5f4cdb2/transformed/appcompat-1.6.1/res/values-v18/values-v18.xml",
+>>>>>>> main
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

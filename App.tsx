@@ -1,28 +1,35 @@
 import React from 'react';
-import { SafeAreaView, StatusBar, StyleSheet, useColorScheme } from 'react-native';
-import MainPage from './mainPage'; // Make sure the import path matches the file name exactly
 
-const App: React.FC = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {RNCSafeAreaProvider} from '@react-native-safe-area-context/native';
+import LoginPage from './src/views/login';
+import MainPage from './src/views/MainPage'
 
-  return (
-    <SafeAreaView style={[styles.container, isDarkMode ? styles.darkMode : styles.lightMode]}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <MainPage />
-    </SafeAreaView>
-  );
+const Stack = createNativeStackNavigator();
+
+const screenOptions = {
+  headerShown: false,
+  statusBarTranslucent: true,
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  darkMode: {
-    backgroundColor: '#333', // Assuming a darker background for dark mode
-  },
-  lightMode: {
-    backgroundColor: '#FFF', // Assuming a lighter background for light mode
-  },
-});
+const App = (): JSX.Element => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Login"
+          component={LoginPage}
+          options={screenOptions}
+        />
+        <Stack.Screen
+          name="Home"
+          component={MainPage}
+          options={screenOptions}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
 
 export default App;
