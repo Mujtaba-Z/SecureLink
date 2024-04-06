@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {RNCSafeAreaProvider} from '@react-native-safe-area-context/native';
 import LoginPage from './src/views/login';
 import MainPage from './src/views/mainPage'
+import ChatPage from './src/views/chatPage'
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,11 @@ const App = (): JSX.Element => {
           name="Home"
           component={MainPage}
           options={screenOptions}
+        />
+        <Stack.Screen
+          name="ChatPage"
+          component={ChatPage}
+          options={{headerShown: true}}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,30 +1,30 @@
 import React from 'react';
 import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const MainPage: React.FC = () => {
-  const handlePress = (buttonName: string) => {
-    console.log(`${buttonName} button pressed`);
-    // Here you can handle navigation or any other action
+  const navigation = useNavigation();
+
+  const handleChatPress = (chatName: string) => {
+    navigation.navigate('ChatPage', { chatName });
   };
 
-  // Example chat data
   const chats = [
     { name: 'Chat 1', lastMessage: 'text', time: '3:45 PM' },
     { name: 'Chat 2', lastMessage: 'Hi?', time: 'Yesterday' },
-    { name: 'Chat 3', lastMessage: 'yo', time: '2 days ago' },
+    { name: 'Chat 3', lastMessage: 'fsao', time: '2 days ago' },
   ];
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>SecureLink</Text>
-      {/* Chat List Section */}
       <ScrollView style={styles.chatList}>
         {chats.map((chat, index) => (
-          <View key={index} style={styles.chatItem}>
+          <TouchableOpacity key={index} onPress={() => handleChatPress(chat.name)} style={styles.chatItem}>
             <Text style={styles.chatName}>{chat.name}</Text>
             <Text style={styles.lastMessage}>{chat.lastMessage}</Text>
             <Text style={styles.time}>{chat.time}</Text>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
       {/* Bottom Navigation Bar */}
