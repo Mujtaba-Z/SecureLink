@@ -37,7 +37,10 @@ const SearchPage: React.FC = () => {
 
   const handleMessage = (employee: any) => {
     console.log("Message button pressed for employee:", employee);
+    // Correctly passing employee.name as the chatName parameter
+    navigation.navigate('ChatPage', { chatName: employee.name });
   };
+
 
   return (
     <SafeAreaView style={styles.container}>

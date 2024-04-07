@@ -16,7 +16,7 @@ const MainPage: React.FC = () => {
 
   const chats = [
     { name: 'Chat 1', lastMessage: 'text', time: '3:45 PM' },
-    { name: 'Chat 2', lastMessage: 'Hi?', time: 'Yesterday' },
+    { name: 'Chat 2', lastMessage: 'fasi?', time: 'Yesterday' },
     { name: 'Chat 3', lastMessage: 'fsao', time: '2 days ago' },
   ];
 

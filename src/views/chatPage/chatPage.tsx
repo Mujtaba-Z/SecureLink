@@ -13,6 +13,8 @@ const ChatPage: React.FC = () => {
   const route = useRoute<RouteProp<ChatPageRouteParamList, 'ChatPage'>>();
   const { chatName } = route.params;
 
+  console.log("ChatPage mounted with chatName:", chatName);
+
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<string[]>([]);
 
