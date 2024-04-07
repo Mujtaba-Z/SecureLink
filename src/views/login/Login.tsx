@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Text, View, StyleSheet, TextInput } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import { Login, Register } from "../../controller/login/Login.tsx";
+import { Login, Register } from "../../controller/authentication/Authentication.tsx";
 import UserInformation from "../../model/UserInformation.js";
 
 const LoginPage = () => {
@@ -12,8 +12,9 @@ const LoginPage = () => {
   const handleLogin = async () => {
     try {
       const user = await Login(email, password);
-      console.log(user);
+      if (user){
       navigation.navigate('Home');
+      }
     } catch (error) {
       console.log(error);
     }
@@ -33,7 +34,9 @@ const LoginPage = () => {
         ''  // DOB
       );
       const user = await Register(userInfo);
-      console.log(user);
+      if (user){
+            navigation.navigate('Home');
+      }
     } catch (error) {
       console.log(error);
     }

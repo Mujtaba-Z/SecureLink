@@ -1,10 +1,11 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {RNCSafeAreaProvider} from '@react-native-safe-area-context/native';
 import LoginPage from './src/views/login';
 import MainPage from './src/views/mainPage'
 import ChatPage from './src/views/chatPage'
+import Search from './src/views/searchPage';
+import Profile from './src/views/profile';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,8 +29,18 @@ const App = (): JSX.Element => {
           options={screenOptions}
         />
         <Stack.Screen
+          name="Search"
+          component={Search}
+          options={{headerShown: true}}
+        />
+        <Stack.Screen
           name="ChatPage"
           component={ChatPage}
+          options={{headerShown: true}}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
           options={{headerShown: true}}
         />
       </Stack.Navigator>
