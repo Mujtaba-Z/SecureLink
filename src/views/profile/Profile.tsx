@@ -5,6 +5,13 @@ import { getAccountDetails, changeComapanySection, changeJobTitle, changePhone, 
 
 const ProfilePage: React.FC = () => {
   const navigation = useNavigation();
+  const [profileDetails, setProfileDetails] = useState<any>({}); // useState to keep profile details
+  const [editableFields, setEditableFields] = useState<any>({
+    jobTitle: '',
+    companySection: '',
+    phone: '',
+    team: ''
+  }); // useState for editable field values
 
   const handlePress = (destination: string) => {
     navigation.navigate(destination);
