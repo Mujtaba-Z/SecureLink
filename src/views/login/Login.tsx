@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Text, View, StyleSheet, TextInput } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import { Login, Register } from "../../controller/login/Login.tsx";
+import { Login, Register } from "../../controller/authentication/Authentication.tsx";
 import UserInformation from "../../model/UserInformation.js";
 
 const LoginPage = () => {
