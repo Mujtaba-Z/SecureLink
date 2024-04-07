@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { getAllAccountDetails } from '../../controller/accountManager/AccountManager.tsx';
+import { fetchLeaderboardData } from '../../controller/leaderboardManager/LeaderboardManager.tsx';
 
 const ViewLeaderboard = () => {
     const [leaderboardData, setLeaderboardData] = useState([]);
@@ -8,13 +8,12 @@ const ViewLeaderboard = () => {
     useEffect(() => {
         const fetchLeaderboard = async () => {
             try {
-                const data = await getAllAccountDetails(); // Fetch user data using the controller function
+                const data = await fetchLeaderboardData(); // Fetch user data using the controller function
                 // Sort the data based on leaderboard points in descending order
-                //const sortedData = data.sort((a, b) => b.leaderboardPoints - a.leaderboardPoints);
+                const sortedData = data.sort((a, b) => b.leaderboardPoints - a.leaderboardPoints);
                 // Limit the result to 10 users
-                //const topTenUsers = sortedData.slice(0, 10);
-                console.log(data);
-                setLeaderboardData(data);
+                const topTenUsers = sortedData.slice(0, 10);
+                setLeaderboardData(topTenUsers);
             } catch (error) {
                 console.error('Error fetching leaderboard:', error);
             }
