@@ -5,6 +5,7 @@ import LoginPage from './src/views/login';
 import MainPage from './src/views/mainPage'
 import ChatPage from './src/views/chatPage'
 import Search from './src/views/searchPage';
+import Profile from './src/views/profile';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +36,11 @@ const App = (): JSX.Element => {
         <Stack.Screen
           name="ChatPage"
           component={ChatPage}
+          options={{headerShown: true}}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
           options={{headerShown: true}}
         />
       </Stack.Navigator>
