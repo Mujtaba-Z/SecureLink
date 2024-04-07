@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { Register } from "../../controller/authentication/Authentication.tsx";
 import UserInformation from '../../model/UserInformation.js';
+import { useNavigation } from '@react-navigation/native';
 
 const SignupPage = () => {
+    const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
@@ -25,6 +27,11 @@ const SignupPage = () => {
         try {
           const user = await Register(userReg);
           console.log(user);
+        } catch (error) {
+          console.log(error);
+        }
+        try {
+          navigation.navigate('Login');
         } catch (error) {
           console.log(error);
         }
