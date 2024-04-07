@@ -22,6 +22,10 @@ const ProfilePage: React.FC = () => {
     fetchProfile(); // Call fetchProfile when component mounts
   }, []); // Empty dependency array ensures the effect runs only once
 
+  // function for navigating to different screens
+  const handlePress = (destination: string) => {
+    navigation.navigate(destination);
+  };
 
   // function for updating profile details
   const handleUpdateField = async (field: string) => {
@@ -119,6 +123,18 @@ const ProfilePage: React.FC = () => {
 
         </View>
       </ScrollView>
+
+      <View style={styles.navBar}>
+        <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Home')}>
+          <Text>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Search')}>
+          <Text>Search</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Profile')}>
+          <Text>Profile</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
@@ -159,6 +175,18 @@ const styles = StyleSheet.create({
   updateButton: {
     color: 'blue',
     fontSize: 16,
+  },
+  navButton: {
+    padding: 10,
+  },
+  navBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    backgroundColor: '#f0f0f0',
+    padding: 10,
   },
 });
 
