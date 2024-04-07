@@ -13,11 +13,13 @@ export const Search = async (searchQuery: string) => {
           userData.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
           userData.title.toLowerCase().includes(searchQuery.toLowerCase())
         ) {
+        const employeeID = userData.employeeID;
           results.push({
             name: userData.name,
             section: userData.section,
             email: userData.email,
             title: userData.title,
+            employeeId: employeeID
           });
         }
       });
