@@ -20,6 +20,7 @@ const getAccountDetails = async () => {
                     phone: userData.phone,
                     team: userData.team,
                     dateOfBirth: userData.dateOfBirth,
+                    leaderboardPoints: userData.leaderboardPoints,
                 };
             }
         });

@@ -62,18 +62,14 @@ const ProfilePage: React.FC = () => {
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.detailsContainer}>
           {/* First, these details are not changeable */}
-          <Text style={styles.label}>EmployeeID:</Text>
-          <Text>{profileDetails.employeeID}</Text>
-          <Text style={styles.label}>Name:</Text>
-          <Text>{profileDetails.name}</Text>
-          <Text style={styles.label}>Email:</Text>
-          <Text>{profileDetails.email}</Text>
-          <Text style={styles.label}>Date of Birth:</Text>
-          <Text>{profileDetails.dateOfBirth}</Text>
+          <Text style={styles.label}>EmployeeID: {profileDetails.employeeID}</Text>
+          <Text style={styles.label}>Name: {profileDetails.name}</Text>
+          <Text style={styles.label}>Email: {profileDetails.email}</Text>
+          <Text style={styles.label}>Date of Birth: {profileDetails.dateOfBirth}</Text>
           
           {/* next details are changeable */}
           
-          <Text style={styles.label}>Phone:</Text>
+          <Text style={styles.label}>Phone: {profileDetails.phone}</Text>
           <View style={styles.fieldContainer}>
             <TextInput
               style={styles.input}
@@ -85,7 +81,7 @@ const ProfilePage: React.FC = () => {
             </TouchableOpacity>
           </View>
 
-          <Text style={styles.label}>Job Title:</Text>
+          <Text style={styles.label}>Job Title: {profileDetails.title}</Text>
           <View style={styles.fieldContainer}>
             <TextInput
               style={styles.input}
@@ -97,7 +93,7 @@ const ProfilePage: React.FC = () => {
             </TouchableOpacity>
           </View>
 
-          <Text style={styles.label}>Section:</Text>
+          <Text style={styles.label}>Section: {profileDetails.section}</Text>
           <View style={styles.fieldContainer}>
             <TextInput
               style={styles.input}
@@ -109,7 +105,7 @@ const ProfilePage: React.FC = () => {
             </TouchableOpacity>
           </View>
 
-          <Text style={styles.label}>Team:</Text>
+          <Text style={styles.label}>Team: {profileDetails.team}</Text>
           <View style={styles.fieldContainer}>
             <TextInput
               style={styles.input}
@@ -120,6 +116,9 @@ const ProfilePage: React.FC = () => {
               <Text style={styles.updateButton}>Update</Text>
             </TouchableOpacity>
           </View>
+
+          {/* Awards details */}
+          <Text style={styles.label}>Leaderboard Points: {profileDetails.Leaderboard}</Text>
 
         </View>
       </ScrollView>
