@@ -4,7 +4,7 @@
             "outputFile": "com.awesomeproject.app-mergeDebugResources-38:/values-ps/values-ps.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Manan\\.gradle\\caches\\transforms-3\\64cc0f09482b7eba658e985cab9ea8b8\\transformed\\jetified-react-android-0.73.6-debug\\res\\values-ps\\values-ps.xml",
+                    "source": "C:\\Users\\mujta\\.gradle\\caches\\transforms-3\\64cc0f09482b7eba658e985cab9ea8b8\\transformed\\jetified-react-android-0.73.6-debug\\res\\values-ps\\values-ps.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8",
                         "startColumns": "4,4,4,4,4,4,4",

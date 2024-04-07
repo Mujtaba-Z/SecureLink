@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, FlatList, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
 
 // Define the types for the route parameters
@@ -39,7 +39,9 @@ const ChatPage: React.FC = () => {
           onChangeText={setMessage}
           style={styles.input}
         />
-        <Button title="Send" onPress={sendMessage} />
+        <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
+          <Text style={styles.sendButtonText}>Send</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -51,9 +53,10 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   chatName: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: 'bold',
     marginVertical: 10,
+    color: '#333',
   },
   messagesList: {
     flex: 1,
@@ -77,6 +80,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     marginRight: 10,
+  },
+  sendButton: {
+    backgroundColor: '#4caf50',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+  sendButtonText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });
 
