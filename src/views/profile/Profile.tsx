@@ -1,77 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Search } from '../../controller/search/Search';
+import { AccountManager } from '../../controller/AccountManager/AccountManager';
 
-const SearchPage: React.FC = () => {
+const ProfilePage: React.FC = () => {
   const navigation = useNavigation();
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [filteredEmployees, setFilteredEmployees] = useState<any[]>([]);
-
-  useEffect(() => {
-    if (searchQuery.trim() !== '') {
-      handleSearch(searchQuery);
-    } else {
-      setFilteredEmployees([]);
-    }
-  }, [searchQuery]);
 
   const handlePress = (destination: string) => {
     navigation.navigate(destination);
   };
 
-  const handleSearch = async (query: string) => {
-    try {
-      setSearchQuery(query);
-      if (query.trim() !== '') {
-        const results = await Search(query);
-        setFilteredEmployees(results);
-      } else {
-        setFilteredEmployees([]);
-      }
-    } catch (error) {
-      console.log(error);
-      setFilteredEmployees([]);
-    }
-  };
-
-  const handleMessage = (employee: any) => {
-    console.log("Message button pressed for employee:", employee);
-  };
-
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>Search Employees</Text>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Search Employees"
-        value={searchQuery}
-        onChangeText={handleSearch}
-      />
-      <ScrollView style={styles.employeeList}>
-  {filteredEmployees.map((employee, index) => (
-    <View key={index} style={styles.employeeItem}>
-      <Text style={styles.employeeName}>{employee.name}</Text>
-      <Text style={styles.employeeDepartment}>{employee.email}</Text>
-      <Text style={styles.employeeDepartment}>{employee.section}</Text>
-      <Text style={styles.employeeDepartment}>{employee.title}</Text>
-      <TouchableOpacity style={styles.messageButton} onPress={() => handleMessage(employee)}>
-        <Text style={styles.messageButtonText}>Message</Text>
-      </TouchableOpacity>
-    </View>
-  ))}
-</ScrollView>
-      <View style={styles.navBar}>
-        <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Home')}>
-          <Text>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Search')}>
-          <Text>Search</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Profile')}>
-          <Text>Profile</Text>
-        </TouchableOpacity>
-      </View>
+      <Text style={styles.text}>Profile</Text>
+      
     </SafeAreaView>
   );
 };
@@ -137,4 +79,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchPage;
+export default ProfilePage;
