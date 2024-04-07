@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { AccountManager } from '../../controller/AccountManager/AccountManager';
+import { getAccountDetails, changeComapanySection, changeJobTitle, changePhone, changeTeamName } from '../../controller/AccountManager/AccountManager';
 
 const ProfilePage: React.FC = () => {
   const navigation = useNavigation();
