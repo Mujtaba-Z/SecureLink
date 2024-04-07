@@ -13,8 +13,30 @@ const ProfilePage: React.FC = () => {
     team: ''
   }); // useState for editable field values
 
-  const handlePress = (destination: string) => {
-    navigation.navigate(destination);
+  // function for updating profile details
+  const handleUpdateField = async (field: string) => {
+    const employeeID = ''; // TODO, get employeeID from somewhere
+    const value = editableFields[field];
+    switch (field) {
+      case 'jobTitle':
+        await changeJobTitle(employeeID, value);
+        break;
+      case 'companySection':
+        await changeComapanySection(employeeID, value);
+        break;
+      case 'phone':
+        await changePhone(employeeID, value);
+        break;
+      case 'team':
+        await changeTeamName(employeeID, value);
+        break;
+      default:
+        break;
+    }
+    
+    // update profile details after change
+    const details = await getAccountDetails(employeeID);
+    setProfileDetails(details);
   };
 
   return (
@@ -22,6 +44,7 @@ const ProfilePage: React.FC = () => {
       <Text style={styles.text}>Profile</Text>
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.detailsContainer}>
+          {/* First, these details are not changeable */}
           <Text style={styles.label}>Name:</Text>
           <Text>{profileDetails.name}</Text>
           <Text style={styles.label}>Email:</Text>
@@ -30,7 +53,18 @@ const ProfilePage: React.FC = () => {
           <Text>{profileDetails.dateOfBirth}</Text>
           <Text style={styles.label}>Section:</Text>
           <Text>{profileDetails.section}</Text>
-
+          {/* next details are changeable */}
+          <Text style={styles.label}>Phone:</Text>
+          <View style={styles.fieldContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder='Phone'
+              onChangeText={(text) => setEditableFields({ ...editableFields, phone: text })}
+            />
+            <TouchableOpacity onPress={() => handleUpdateField('phone')}>
+              <Text style={styles.updateButton}>Update</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       /</ScrollView>
     </SafeAreaView>
