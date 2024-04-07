@@ -5,7 +5,7 @@ import {getDocs, collection, setDoc} from 'firebase/firestore';
 
 const getAccountDetails = async () => {
     try {
-        const token = AsyncStorage.getItem('token');
+        const token = await AsyncStorage.getItem('token');
         const querySnapshot = await getDocs(collection(db, 'users'));
         let result = {};
         querySnapshot.forEach((doc) => {

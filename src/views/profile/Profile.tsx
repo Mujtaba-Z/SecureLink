@@ -175,6 +175,8 @@ const styles = StyleSheet.create({
   updateButton: {
     color: 'blue',
     fontSize: 16,
+    fontWeight: 'bold',
+    marginLeft: 10,
   },
   navButton: {
     padding: 10,
