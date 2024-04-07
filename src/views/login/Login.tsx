@@ -12,8 +12,9 @@ const LoginPage = () => {
   const handleLogin = async () => {
     try {
       const user = await Login(email, password);
-      console.log(user);
+      if (user){
       navigation.navigate('Home');
+      }
     } catch (error) {
       console.log(error);
     }
@@ -33,7 +34,9 @@ const LoginPage = () => {
         ''  // DOB
       );
       const user = await Register(userInfo);
-      console.log(user);
+      if (user){
+            navigation.navigate('Home');
+      }
     } catch (error) {
       console.log(error);
     }
