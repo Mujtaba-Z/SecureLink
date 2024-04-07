@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Search } from '../../controller/search/Search';
+import { createChat } from '../../controller/chat/Chat';
 
 const SearchPage: React.FC = () => {
   const navigation = useNavigation();
@@ -22,7 +23,7 @@ const SearchPage: React.FC = () => {
 
   const handleSearch = async (query: string) => {
     try {
-      setSearchQuery(query); 
+      setSearchQuery(query);
       if (query.trim() !== '') {
         const results = await Search(query);
         setFilteredEmployees(results);
@@ -35,9 +36,21 @@ const SearchPage: React.FC = () => {
     }
   };
 
-  const handleMessage = (employee: any) => {
-    console.log("Message button pressed for employee:", employee);
-  };  
+  const handleMessage = async (employee: any) => {
+    const currentUserId = 'manan';
+    const employeeId = employee.employeeId;
+    console.log("employee messaged: " + employee)
+    try {
+      const chatDocRef = await createChat(currentUserId, employeeId);
+      if (chatDocRef.id) {
+        navigation.navigate('ChatPage', { chatId: chatDocRef.id, chatName: employee.name });
+      } else {
+        console.error("Failed to navigate: No chatDocRef ID.");
+      }
+    } catch (error) {
+      console.error("Failed to create chat:", error);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
