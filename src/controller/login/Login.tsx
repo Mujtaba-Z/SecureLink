@@ -9,8 +9,6 @@ const Login = async (email: string, password: string) => {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         const token = user.accessToken;
-        AsyncStorage.setItem('token', token);
-        console.log(token);
         return token;
     } catch (error) {
         console.log(error);
@@ -33,7 +31,6 @@ const Register = async (userInfo: UserInformation) => {
             dateOfBirth: userInfo.DOB,
             team: userInfo.teamName
         });
-        console.log(user.accessToken);
         const token = user.accessToken;
         AsyncStorage.setItem('token', token);
         return token;

@@ -10,6 +10,10 @@ const MainPage: React.FC = () => {
     navigation.navigate('ChatPage', { chatName });
   };
 
+  const handlePress = (screen: string) => {
+    navigation.navigate(screen);
+  };
+
   const chats = [
     { name: 'Chat 1', lastMessage: 'text', time: '3:45 PM' },
     { name: 'Chat 2', lastMessage: 'Hi?', time: 'Yesterday' },
@@ -39,14 +43,14 @@ const MainPage: React.FC = () => {
       </ScrollView>
       {/* Bottom Navigation Bar */}
       <View style={styles.navBar}>
-        <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Profile')}>
-          <Text>Profile</Text>
+        <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Home')}>
+          <Text>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Search')}>
           <Text>Search</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Settings')}>
-          <Text>Settings</Text>
+        <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Profile')}>
+          <Text>Profile</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
