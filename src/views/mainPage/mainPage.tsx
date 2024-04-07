@@ -1,18 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
-
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const MainPage: React.FC = () => {
+  const navigation = useNavigation();
   const handlePress = (buttonName: string) => {
     console.log(`${buttonName} button pressed`);
     // Here you can handle navigation or any other action
   };
-
   // Example chat data
   const chats = [
     { name: 'Chat 1', lastMessage: 'text', time: '3:45 PM' },
     { name: 'Chat 2', lastMessage: 'Hi?', time: 'Yesterday' },
     { name: 'Chat 3', lastMessage: 'yo', time: '2 days ago' },
   ];
+
+  useEffect(() => {
+    // Check if user is logged in
+    AsyncStorage.getItem('token').then((token) => {
+      if (!token) {
+        navigation.navigate('Login');
+      }
+    });
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
