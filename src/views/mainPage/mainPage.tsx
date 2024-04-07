@@ -35,7 +35,7 @@ const MainPage: React.FC = () => {
       <Image source={require('../../assets/securelink-high-resolution-logo-black-transparent.png')} style={styles.mainPageLogo}/>
       <Text style={styles.text}>SecureLink</Text>
     </SafeAreaView>
-      
+
       <ScrollView style={styles.chatList}>
         {chats.map((chat, index) => (
           <TouchableOpacity key={index} onPress={() => handleChatPress(chat.name)} style={styles.chatItem}>
