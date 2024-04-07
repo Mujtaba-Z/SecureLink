@@ -20,7 +20,19 @@ const ProfilePage: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>Profile</Text>
-      
+      <ScrollView style={styles.scrollContainer}>
+        <View style={styles.detailsContainer}>
+          <Text style={styles.label}>Name:</Text>
+          <Text>{profileDetails.name}</Text>
+          <Text style={styles.label}>Email:</Text>
+          <Text>{profileDetails.email}</Text>
+          <Text style={styles.label}>Date of Birth:</Text>
+          <Text>{profileDetails.dateOfBirth}</Text>
+          <Text style={styles.label}>Section:</Text>
+          <Text>{profileDetails.section}</Text>
+
+        </View>
+      /</ScrollView>
     </SafeAreaView>
   );
 };
