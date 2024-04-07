@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Button, Text, View, StyleSheet, TextInput } from "react-native";
+import { Button, Text, View, StyleSheet, TextInput, Image } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import { Login, Register } from "../../controller/authentication/Authentication.tsx";
-import UserInformation from "../../model/UserInformation.js";
+import { Login } from "../../controller/authentication/Authentication.tsx";
 
 const LoginPage = () => {
   const navigation = useNavigation();
@@ -30,6 +29,8 @@ const LoginPage = () => {
 
   return (
     <View style={styles.container}>
+      <Image source={require('../../assets/securelink-high-resolution-logo-black-transparent.png')} style={styles.loginImage}/>
+      <Text style={styles.loginTitle}>Welcome Back!!!!</Text>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
@@ -72,6 +73,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  loginImage: {
+    width: 200,
+    height: 200,
+    marginBottom: 30,
+  },
+  loginTitle: {
+    fontSize: 30,
+    marginBottom: 50,
   },
   inputContainer: {
     width: '80%',
