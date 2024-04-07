@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const MainPage: React.FC = () => {
   const navigation = useNavigation();
 
+
   const handleChatPress = (chatName: string) => {
     navigation.navigate('ChatPage', { chatName });
   };

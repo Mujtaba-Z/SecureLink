@@ -38,22 +38,21 @@ const SearchPage: React.FC = () => {
     }
   };
 
-const handleMessage = async (employee: any) => {
-  console.log(employee.employeeId)
-  const currentUserId = 'currentUserId';
-  const employeeId = employee.employeeId;
+  const handleMessage = async (employee: any) => {
+    const currentUserId = 'currentUserId';
+    const employeeId = employee.employeeId;
 
-  try {
-    const chatDocRef = await createChat(currentUserId, employeeId);
-    if (chatDocRef.id) {
-      navigation.navigate('ChatPage', { chatId: chatDocRef.id, chatName: employee.name });
-    } else {
-      console.error("Failed to navigate: No chatDocRef ID.");
+    try {
+      const chatDocRef = await createChat(currentUserId, employeeId);
+      if (chatDocRef.id) {
+        navigation.navigate('ChatPage', { chatId: chatDocRef.id, chatName: employee.name });
+      } else {
+        console.error("Failed to navigate: No chatDocRef ID.");
+      }
+    } catch (error) {
+      console.error("Failed to create chat:", error);
     }
-  } catch (error) {
-    console.error("Failed to create chat:", error);
-  }
-};
+  };
 
 
   return (
