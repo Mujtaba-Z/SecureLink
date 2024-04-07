@@ -17,6 +17,7 @@ const getAccountDetails = async (employeeID: string) => {
                     phone: userData.phone,
                     team: userData.team,
                     dateOfBirth: userData.dateOfBirth,
+                    leaderboardPoints: userData.leaderboardPoints,
                 };
             }
         });
@@ -118,4 +119,4 @@ const changeTeamManager = async (employeeID: string, newManager: UserInformation
     }
 };
 
-export {getAccountDetails, changeJobTitle, changeComapanySection, changePhone, changeTeamName, deleteAccount, changeTeamManager}; 
+export {getAccountDetails, getAllAccountDetails, changeComapanySection, changePhone, changeTeamName, deleteAccount, changeTeamManager};

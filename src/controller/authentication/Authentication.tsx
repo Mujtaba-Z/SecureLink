@@ -29,7 +29,8 @@ const Register = async (userInfo: UserInformation) => {
             title: userInfo.title,
             phone: userInfo.phoneNum,
             dateOfBirth: userInfo.DOB,
-            team: userInfo.teamName
+            team: userInfo.teamName,
+            leaderboardPoints: userInfo.leaderboardPoints,
         });
         const token = user.accessToken;
         AsyncStorage.setItem('token', token);
