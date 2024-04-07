@@ -9,6 +9,8 @@ const Login = async (email: string, password: string) => {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         const token = user.accessToken;
+        AsyncStorage.setItem('token', token);
+        AsyncStorage.setItem('employeeID', user.employeeID);
         return token;
     } catch (error) {
         console.log(error);
@@ -33,6 +35,7 @@ const Register = async (userInfo: UserInformation) => {
         });
         const token = user.accessToken;
         AsyncStorage.setItem('token', token);
+        AsyncStorage.setItem('employeeID', userInfo.employeeID);
         return token;
     } catch (error) {
         console.log(error);

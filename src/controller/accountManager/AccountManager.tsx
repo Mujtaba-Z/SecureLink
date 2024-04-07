@@ -1,15 +1,18 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserInformation from '../../model/UserInformation.js';
 import {db} from '../firebase.js';
 import {getDocs, collection, setDoc} from 'firebase/firestore';
 
-const getAccountDetails = async (employeeID: string) => {
+const getAccountDetails = async () => {
     try {
+        const token = AsyncStorage.getItem('token');
         const querySnapshot = await getDocs(collection(db, 'users'));
         let result = {};
         querySnapshot.forEach((doc) => {
             const userData = doc.data();
-            if (userData.employeeID === employeeID) {
+            if (userData.accessToken === token) {
                 result = {
+                    employeeID: userData.employeeID,
                     name: userData.name,
                     section: userData.section,
                     email: userData.email,
