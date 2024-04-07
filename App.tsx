@@ -37,7 +37,7 @@ const App = (): JSX.Element => {
         <Stack.Screen
           name="Search"
           component={Search}
-          options={{ headerShown: true }}
+          options={{headerShown: true}}
         />
         <Stack.Screen
           name="ChatPage"
