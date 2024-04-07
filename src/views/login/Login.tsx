@@ -1,27 +1,31 @@
 import React, { useState } from "react";
 import { Button, Text, View, StyleSheet, TextInput } from "react-native";
-import { Login, Register } from "../../controller/login/Login.tsx";
+import { useNavigation } from '@react-navigation/native';
+import { Login, Register } from "../../controller/authentication/Authentication.tsx";
+import UserInformation from "../../model/UserInformation.js";
 
 const LoginPage = () => {
+  const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
     try {
       const user = await Login(email, password);
-      console.log(user);
+      if (user){
+      navigation.navigate('Home');
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleRegister = async () => {
-    try {
-      const user = await Register(email, password);
-      console.log(user);
-    } catch (error) {
-      console.log(error);
-    }
+      try {
+        navigation.navigate('Signup');
+      } catch (error) {
+        console.log(error);
+      }
   };
 
   return (

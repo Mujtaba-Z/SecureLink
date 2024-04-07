@@ -14,7 +14,7 @@ export const Login = async (email: string, password: string) => {
     }
 }
 
-export const Register = async (email: string, password: string) => {
+export const Register = async (email: string, password: string, name: string, employeeID: number) => {
     try {
         createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
             const user = userCredential.user;
