@@ -13,9 +13,15 @@ const ProfilePage: React.FC = () => {
     team: ''
   }); // useState for editable field values
   
-  // get profile details
-  const details = getAccountDetails();
-  setProfileDetails(details);
+  // useEffect to get profile details only once
+  useEffect(() => {
+    async function fetchProfile() {
+      const details = await getAccountDetails(); // Fetch profile details
+      setProfileDetails(details);
+    }
+    fetchProfile(); // Call fetchProfile when component mounts
+  }, []); // Empty dependency array ensures the effect runs only once
+
 
   // function for updating profile details
   const handleUpdateField = async (field: string) => {
@@ -37,8 +43,8 @@ const ProfilePage: React.FC = () => {
         break;
     }
     // update profile details after change
-    const details = getAccountDetails();
-    setProfileDetails(details);
+    const updatedDetails = await getAccountDetails();
+    setProfileDetails(updatedDetails);
     }
 
     catch (error) {
