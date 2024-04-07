@@ -86,9 +86,9 @@ const ProfilePage: React.FC = () => {
             <TextInput
               style={styles.input}
               placeholder='Title'
-              onChangeText={(text) => setEditableFields({ ...editableFields, title: text })}
+              onChangeText={(text) => setEditableFields({ ...editableFields, jobTitle: text })}
             />
-            <TouchableOpacity onPress={() => handleUpdateField('title')}>
+            <TouchableOpacity onPress={() => handleUpdateField('jobTitle')}>
               <Text style={styles.updateButton}>Update</Text>
             </TouchableOpacity>
           </View>
@@ -98,9 +98,9 @@ const ProfilePage: React.FC = () => {
             <TextInput
               style={styles.input}
               placeholder='Section'
-              onChangeText={(text) => setEditableFields({ ...editableFields, title: text })}
+              onChangeText={(text) => setEditableFields({ ...editableFields, companySection: text })}
             />
-            <TouchableOpacity onPress={() => handleUpdateField('section')}>
+            <TouchableOpacity onPress={() => handleUpdateField('companySection')}>
               <Text style={styles.updateButton}>Update</Text>
             </TouchableOpacity>
           </View>
@@ -110,7 +110,7 @@ const ProfilePage: React.FC = () => {
             <TextInput
               style={styles.input}
               placeholder='Team'
-              onChangeText={(text) => setEditableFields({ ...editableFields, title: text })}
+              onChangeText={(text) => setEditableFields({ ...editableFields, team: text })}
             />
             <TouchableOpacity onPress={() => handleUpdateField('team')}>
               <Text style={styles.updateButton}>Update</Text>
@@ -118,7 +118,7 @@ const ProfilePage: React.FC = () => {
           </View>
 
         </View>
-      /</ScrollView>
+      </ScrollView>
     </SafeAreaView>
   );
 };
