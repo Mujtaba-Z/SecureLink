@@ -17,8 +17,33 @@ const getAccountDetails = async (employeeID: string) => {
                     phone: userData.phone,
                     team: userData.team,
                     dateOfBirth: userData.dateOfBirth,
+                    leaderboardPoints: userData.leaderboardPoints,
                 };
             }
+        });
+        return result;
+    } catch (error) {
+        console.log(error);
+        return {};
+    }
+};
+
+const getAllAccountDetails = async () => {
+    try {
+        const querySnapshot = await getDocs(collection(db, 'users'));
+        let result = {};
+        querySnapshot.forEach((doc) => {
+            const userData = doc.data();
+            result = {
+                name: userData.name,
+                section: userData.section,
+                email: userData.email,
+                title: userData.title,
+                phone: userData.phone,
+                team: userData.team,
+                dateOfBirth: userData.dateOfBirth,
+                leaderboardPoints: userData.leaderboardPoints,
+            };
         });
         return result;
     } catch (error) {
@@ -118,4 +143,4 @@ const changeTeamManager = async (employeeID: string, newManager: UserInformation
     }
 };
 
-export {getAccountDetails, changeJobTitle, changeComapanySection, changePhone, changeTeamName, deleteAccount, changeTeamManager}; 
+export {getAccountDetails, getAllAccountDetails, changeComapanySection, changePhone, changeTeamName, deleteAccount, changeTeamManager};

@@ -1,7 +1,6 @@
 import {db} from '../firebase.js';
 import {getDocs, collection} from 'firebase/firestore';
 
-
 export const Search = async (searchQuery: string) => {
     try {
       const querySnapshot = await getDocs(collection(db, 'users'));
