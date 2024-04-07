@@ -1,42 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import firebase from 'firebase/app';
 import 'firebase/firestore';
+import { db } from '../firebase.js';
+import { getDocs, collection, where, query } from 'firebase/firestore';
 
-interface Chat {
-  id: string;
-  name: string;
-  lastMessage: string;
-  time: string;
-}
+export const DisplayChat = async (employeeID: String) => {
 
-interface DisplayChatProps {
-  onChatsFetched: (chats: Chat[]) => void;
-}
+  try {
+    // Query the chats collection to find all chats where the employee is a participant
+    const chatsQuerySnapshot = await getDocs(query(collection(db, 'chats'), where('participants', 'array-contains', employeeID)));
+    const chatNames = [];
 
-const DisplayChat: React.FC<DisplayChatProps> = ({ onChatsFetched }) => {
-  useEffect(() => {
-    const fetchChats = async () => {
-      try {
-        const currentUserID = firebase.auth().currentUser?.uid;
-        if (currentUserID) {
-          const chatsRef = firebase.firestore().collection('chats').where('members', 'array-contains', currentUserID);
-          const querySnapshot = await chatsRef.get();
-          const fetchedChats = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }) as Chat);
-          onChatsFetched(fetchedChats);
-        }
-      } catch (error) {
-        console.error('Error fetching chats:', error);
-      }
-    };
+    // Iterate over the query snapshot to extract chat names
+    chatsQuerySnapshot.forEach(async (chatDoc) => {
+      // For each chat, get the chat name and push it to the array
+      const chatData = chatDoc.data();
+      const chatNameDoc = await getDocs(doc(db, 'chats', chatDoc.id, 'chatName'));
+      const chatName = chatNameDoc.exists() ? chatNameDoc.data().chatName : '';
+      chatNames.push(chatName);
+    });
 
-    fetchChats();
-
-    // Cleanup function
-    return () => {};
-  }, [onChatsFetched]);
-
-  return null; // Since this component only fetches data, it doesn't render anything directly
+    return chatNames;
+  } catch (error) {
+    console.error('Error fetching chats for employee:', error);
+    return [];
+  }
 };
-
-export default DisplayChat;

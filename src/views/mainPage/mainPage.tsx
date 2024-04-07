@@ -1,10 +1,58 @@
-import React, {useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { DisplayChat } from '../../controller/displayChat/DisplayChat';
+import { query } from 'firebase/firestore';
 
 const MainPage: React.FC = () => {
   const navigation = useNavigation();
+  const [chats, setChats] = useState<any[]>([]);
+  const [employeeID, setEmployeeID] = useState<string>('example');
+
+
+  useEffect(() => {
+    if(employeeID !== ''){
+      handleSearch(employeeID);
+    }else{
+      setChats([]);
+    }
+  }, [employeeID])
+
+  const handleSearch = async (currEmployee: string) => {
+    try{
+      setEmployeeID(currEmployee);
+      if(currEmployee.trim() !== ''){
+        const results = await DisplayChat(currEmployee)
+        setChats(results);
+      }else{
+        setChats([])
+      }
+    } catch (error){
+      console.log(error)
+      setChats([]);
+    }
+  }
+
+
+  // useEffect(() => {
+  //   // Fetch chats for the current user
+  //   async function fetchChats() {
+  //     try {
+  //       const currentUserID = await AsyncStorage.getItem('userID'); // Assuming you store the userID in AsyncStorage
+  //       if (currentUserID) {
+  //         const fetchedChats = await DisplayChat(currentUserID);
+  //         setChats(fetchedChats);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching chats:', error);
+  //     }
+  //   }
+    
+  //   fetchChats();
+  // }, []);
+
+
 
   const handleChatPress = (chatName: string) => {
     navigation.navigate('ChatPage', { chatName });
@@ -14,37 +62,27 @@ const MainPage: React.FC = () => {
     navigation.navigate(screen);
   };
 
-  const chats = [
-    { name: 'Chat 1', lastMessage: 'text', time: '3:45 PM' },
-    { name: 'Chat 2', lastMessage: 'Hi?', time: 'Yesterday' },
-    { name: 'Chat 3', lastMessage: 'fsao', time: '2 days ago' },
-  ];
-
-    useEffect(() => {
-      // Check if user is logged in
-      AsyncStorage.getItem('token').then((token) => {
-        if (!token) {
-          navigation.navigate('Login');
-        }
-      });
-    }, []);
+  const handleChatsFetched = (fetchedChats: any[]) => {
+    setChats(fetchedChats);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-    <SafeAreaView style={styles.rowContainer}>
-      <Image source={require('../../assets/securelink-high-resolution-logo-black-transparent.png')} style={styles.mainPageLogo}/>
-      <Text style={styles.text}>SecureLink</Text>
-    </SafeAreaView>
-
+      <SafeAreaView style={styles.rowContainer}>
+        <Image source={require('../../assets/securelink-high-resolution-logo-black-transparent.png')} style={styles.mainPageLogo}/>
+        <Text style={styles.text}>SecureLink</Text>
+      </SafeAreaView>
+      
       <ScrollView style={styles.chatList}>
-        {chats.map((chat, index) => (
-          <TouchableOpacity key={index} onPress={() => handleChatPress(chat.name)} style={styles.chatItem}>
+        {chats.map((chat: any) => (
+          <TouchableOpacity key={chat.id} onPress={() => handleChatPress(chat.id)} style={styles.chatItem}>
             <Text style={styles.chatName}>{chat.name}</Text>
             <Text style={styles.lastMessage}>{chat.lastMessage}</Text>
             <Text style={styles.time}>{chat.time}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
+
       {/* Bottom Navigation Bar */}
       <View style={styles.navBar}>
         <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Home')}>
@@ -60,6 +98,9 @@ const MainPage: React.FC = () => {
           <Text style={styles.navBarText}>Leaderboard</Text>
         </TouchableOpacity>
       </View>
+      
+      {/* Fetch chats */}
+      <DisplayChat onChatsFetched={handleChatsFetched} />
     </SafeAreaView>
   );
 };
