@@ -37,10 +37,11 @@ const SearchPage: React.FC = () => {
   };
 
   const handleMessage = async (employee: any) => {
-    const currentUserId = 'manan';
+    const currentUserId = 'wjCtOwAbVJbsBnfclYrXR9NFRA23';
     const employeeId = employee.employeeId;
     console.log("employee messaged: " + employee)
     try {
+    console.log("messaging: " + employee.employeeId)
       const chatDocRef = await createChat(currentUserId, employeeId);
       if (chatDocRef.id) {
         navigation.navigate('ChatPage', { chatId: chatDocRef.id, chatName: employee.name });

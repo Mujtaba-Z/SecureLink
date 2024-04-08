@@ -1,10 +1,15 @@
-import React, {useEffect} from 'react';
+import React, {useLayoutEffect, useEffect, useState} from 'react';
 import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {db} from '../../controller/firebase.js';
+import {getDocs, collection, onSnapshot, query} from 'firebase/firestore';
 
 const MainPage: React.FC = () => {
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(true);
+  const [chats,setChats] = useState(null);
+
 
   const handleChatPress = (chatName: string) => {
     navigation.navigate('ChatPage', { chatName });
@@ -14,37 +19,60 @@ const MainPage: React.FC = () => {
     navigation.navigate(screen);
   };
 
-  const chats = [
-    { name: 'Chat 1', lastMessage: 'text', time: '3:45 PM' },
-    { name: 'Chat 2', lastMessage: 'Hi?', time: 'Yesterday' },
-    { name: 'Chat 3', lastMessage: 'fsao', time: '2 days ago' },
-  ];
-
     useEffect(() => {
-      // Check if user is logged in
-      AsyncStorage.getItem('token').then((token) => {
-        if (!token) {
-          navigation.navigate('Login');
-        }
+      console.log("Fetching chats...");
+      const unsubscribe = onSnapshot(collection(db, "chats"), (querySnapShot) => {
+        console.log("Query snapshot:", querySnapShot.docs);
+        const currentUserId = "wjCtOwAbVJbsBnfclYrXR9NFRA23";
+        const chatRooms = querySnapShot.docs.map(doc => doc.data());
+        console.log("All chat rooms:", chatRooms);
+        const userChats = chatRooms.filter(room => room.participants.includes(currentUserId));
+        console.log("User's chats:", userChats);
+        setChats(userChats);
+        setIsLoading(false);
       });
+
+      return unsubscribe;
     }, []);
 
+
+
+//   const chats = [
+//     { name: 'Chat 1', lastMessage: 'text', time: '3:45 PM' },
+//     { name: 'Chat 2', lastMessage: 'Hi?', time: 'Yesterday' },
+//     { name: 'Chat 3', lastMessage: 'fsao', time: '2 days ago' },
+//   ];
+//
+//     useEffect(() => {
+//       // Check if user is logged in
+//       AsyncStorage.getItem('token').then((token) => {
+//         if (!token) {
+//           navigation.navigate('Login');
+//         }
+//       });
+//     }, []);
+
   return (
+
     <SafeAreaView style={styles.container}>
     <SafeAreaView style={styles.rowContainer}>
       <Image source={require('../../assets/securelink-high-resolution-logo-black-transparent.png')} style={styles.mainPageLogo}/>
       <Text style={styles.text}>SecureLink</Text>
     </SafeAreaView>
       
-      <ScrollView style={styles.chatList}>
-        {chats.map((chat, index) => (
-          <TouchableOpacity key={index} onPress={() => handleChatPress(chat.name)} style={styles.chatItem}>
-            <Text style={styles.chatName}>{chat.name}</Text>
-            <Text style={styles.lastMessage}>{chat.lastMessage}</Text>
-            <Text style={styles.time}>{chat.time}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+    <>
+      {chats && chats.length > 0 ? (
+        <>
+            {chats.map((room, index) => (
+              <MessageCard key={room._id} room={room} index={index} />
+            ))}
+        </>
+      ) : null}
+    </>
+
+
+
+
       {/* Bottom Navigation Bar */}
       <View style={styles.navBar}>
         <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Home')}>
@@ -61,6 +89,16 @@ const MainPage: React.FC = () => {
         </TouchableOpacity>
       </View>
     </SafeAreaView>
+  );
+};
+
+
+const MessageCard = ({ room, index }) => {
+  return (
+    <TouchableOpacity style={styles.messageBox}>
+      <Text style={styles.messageNumber}>{index + 1}</Text>
+      <Text style={styles.messageText}>{room.lastMessage}</Text>
+    </TouchableOpacity>
   );
 };
 
@@ -129,6 +167,20 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#333',
   },
+    messageBox: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: 10,
+      borderBottomWidth: 1,
+      borderBottomColor: '#ccc',
+    },
+    messageNumber: {
+      fontWeight: 'bold',
+      marginRight: 10,
+    },
+    messageText: {
+      flex: 1,
+    },
 });
 
 export default MainPage;
