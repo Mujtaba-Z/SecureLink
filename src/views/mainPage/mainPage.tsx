@@ -4,11 +4,14 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {db} from '../../controller/firebase.js';
 import {getDocs, collection, onSnapshot, query} from 'firebase/firestore';
+import { getEmployeeID } from '../../controller/accountManager/AccountManager.tsx';
+import { get } from 'firebase/database';
 
 const MainPage: React.FC = () => {
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(true);
   const [chats,setChats] = useState(null);
+  const [employeeID, setEmployeeID] = useState("");
 
 
   const handleChatPress = (chatName: string) => {
@@ -21,12 +24,17 @@ const MainPage: React.FC = () => {
 
     useEffect(() => {
       console.log("Fetching chats...");
+      const fetchEmployeeID = async () => {
+        const eID = await getEmployeeID(); 
+        setEmployeeID(eID);
+      }
+      fetchEmployeeID(); // Call fetchProfile when component mounts
+      console.log("Employee ID:", employeeID);
       const unsubscribe = onSnapshot(collection(db, "chats"), (querySnapShot) => {
         console.log("Query snapshot:", querySnapShot.docs);
-        const currentUserId = "wjCtOwAbVJbsBnfclYrXR9NFRA23";
         const chatRooms = querySnapShot.docs.map(doc => doc.data());
         console.log("All chat rooms:", chatRooms);
-        const userChats = chatRooms.filter(room => room.participants.includes(currentUserId));
+        const userChats = chatRooms.filter(room => room.participants.includes(employeeID));
         console.log("User's chats:", userChats);
         setChats(userChats);
         setIsLoading(false);
