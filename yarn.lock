@@ -6624,6 +6624,11 @@ react-is@^17.0.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-aes-crypto@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/react-native-aes-crypto/-/react-native-aes-crypto-3.0.1.tgz"
+  integrity sha512-51L++eKz13cPeIqg/9Slp1aWIsYOiHzK1jJ9AjcmmtDi3jqtRqdh0y2yJqDI31iBgkQVMz3FjN9zfQ1alj7QBQ==
+
 react-native-crypto-js@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/react-native-crypto-js/-/react-native-crypto-js-1.0.0.tgz"

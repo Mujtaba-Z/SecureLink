@@ -9,14 +9,13 @@ const getAccountDetails = async () => {
         const userKey = await AsyncStorage.getItem('userKey');
         const token = await AsyncStorage.getItem('token');
         const querySnapshot = await getDocs(collection(db, 'users'));
-        let result = {};
-        
-        querySnapshot.forEach((doc) => {
+        let result = null;
+
+        for (const doc of querySnapshot.docs) {
             const userData = doc.data();
             if (userData.accessToken) {
-                const decryptedToken = decryptToken({ userKey: userKey, encryptedToken: userData.accessToken});
-                const verification = decryptedToken === token;
-                if (verification) {
+                const decryptedToken = await decryptToken({ userKey: userKey, encryptedToken: userData.accessToken });
+                if (decryptedToken === token) {
                     result = {
                         employeeID: userData.employeeID,
                         name: userData.name,
@@ -28,15 +27,17 @@ const getAccountDetails = async () => {
                         dateOfBirth: userData.dateOfBirth,
                         leaderboardPoints: userData.leaderboardPoints,
                     };
+                    break; 
                 }
             }
-         });
+        }
         return result;
     } catch (error) {
         console.log(error);
-        return {};
+        throw error;
     }
 };
+
 
 
 const changeJobTitle = async (employeeID: string, newTitle: string) => {

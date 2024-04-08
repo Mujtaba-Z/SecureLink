@@ -9,6 +9,7 @@ MERGED from [com.facebook.react:flipper-integration:0.73.6] /Users/kfmoi/.gradle
 MERGED from [:react-native-async-storage_async-storage] /Users/kfmoi/Documents/Projects/SecureLink/node_modules/@react-native-async-storage/async-storage/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-community_masked-view] /Users/kfmoi/Documents/Projects/SecureLink/node_modules/@react-native-community/masked-view/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-firebase_app] /Users/kfmoi/Documents/Projects/SecureLink/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-30:12
+MERGED from [:react-native-aes-crypto] /Users/kfmoi/Documents/Projects/SecureLink/node_modules/react-native-aes-crypto/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-gesture-handler] /Users/kfmoi/Documents/Projects/SecureLink/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-reanimated] /Users/kfmoi/Documents/Projects/SecureLink/node_modules/react-native-reanimated/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-safe-area-context] /Users/kfmoi/Documents/Projects/SecureLink/node_modules/react-native-safe-area-context/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
@@ -209,6 +210,8 @@ MERGED from [:react-native-community_masked-view] /Users/kfmoi/Documents/Project
 MERGED from [:react-native-community_masked-view] /Users/kfmoi/Documents/Projects/SecureLink/node_modules/@react-native-community/masked-view/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-firebase_app] /Users/kfmoi/Documents/Projects/SecureLink/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:6:5-44
 MERGED from [:react-native-firebase_app] /Users/kfmoi/Documents/Projects/SecureLink/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:6:5-44
+MERGED from [:react-native-aes-crypto] /Users/kfmoi/Documents/Projects/SecureLink/node_modules/react-native-aes-crypto/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-aes-crypto] /Users/kfmoi/Documents/Projects/SecureLink/node_modules/react-native-aes-crypto/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-gesture-handler] /Users/kfmoi/Documents/Projects/SecureLink/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-gesture-handler] /Users/kfmoi/Documents/Projects/SecureLink/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-reanimated] /Users/kfmoi/Documents/Projects/SecureLink/node_modules/react-native-reanimated/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
