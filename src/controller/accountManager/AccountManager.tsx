@@ -59,6 +59,32 @@ const getEmployeeName = async (employeeID: string) => {
     }
 }
 
+const getEmployeeID = async () => {
+    try {
+        const userKey = await AsyncStorage.getItem('userKey');
+        const token = await AsyncStorage.getItem('token');
+        const querySnapshot = await getDocs(collection(db, 'users'));
+        let result = null;
+
+        await Promise.all(querySnapshot.docs.map(async (doc) => {
+            const userData = doc.data();
+            if (userData.accessToken) {
+                const decryptedToken = await decryptToken({ userKey: userKey, encryptedToken: userData.accessToken });
+                console.log(decryptedToken);
+                console.log(decryptedToken === token);
+                if (decryptedToken === token) {
+                    result = userData.employeeID;
+                }
+            }
+        }));
+        return result;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+    
+
 
 
 const changeJobTitle = async (employeeID: string, newTitle: string) => {
@@ -161,4 +187,4 @@ const changeTeamManager = async (employeeID: string, newManager: UserInformation
     }
 };
 
-export { getAccountDetails, changeCompanySection, changePhone, changeTeamName, deleteAccount, changeTeamManager, changeJobTitle, getEmployeeName };
+export { getAccountDetails, changeCompanySection, changePhone, changeTeamName, deleteAccount, changeTeamManager, changeJobTitle, getEmployeeName, getEmployeeID };
