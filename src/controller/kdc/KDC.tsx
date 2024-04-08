@@ -1,43 +1,54 @@
-import CryptoJS from "react-native-crypto-js";
+import Aes from "react-native-aes-crypto";
 
-export const generateKeys = () => {
-  const userKey = CryptoJS.lib.WordArray.random(128 / 8).toString();
+export const generateKeys = async () => {
+  const userKey = await Aes.randomKey(16); // 128 bits = 16 bytes
   return { userKey };
 };
 
-const establishSession = ({ userKey, employeeKey }) => {
-  const nonce = CryptoJS.lib.WordArray.random(8).toString();
+const establishSession = async ({ userKey, employeeKey }) => {
+  const nonce = await Aes.randomKey(8); // 64 bits = 8 bytes
 
-  const encryptedNonce = CryptoJS.AES.encrypt(nonce, employeeKey).toString();
-  const decryptedNonce = CryptoJS.AES.decrypt(encryptedNonce, employeeKey).toString(CryptoJS.enc.Utf8);
+  const encryptedNonce = await Aes.encrypt(nonce, employeeKey);
+  const decryptedNonce = await Aes.decrypt(encryptedNonce, employeeKey);
 
-  const sessionKey = CryptoJS.lib.WordArray.random(128 / 8).toString();
-  const encryptedSessionKey = CryptoJS.AES.encrypt(sessionKey, userKey).toString();
-  const decryptedSessionKey = CryptoJS.AES.decrypt(encryptedSessionKey, userKey).toString(CryptoJS.enc.Utf8);
+  const sessionKey = await Aes.randomKey(16); // 128 bits = 16 bytes
+  const encryptedSessionKey = await Aes.encrypt(sessionKey, userKey);
+  const decryptedSessionKey = await Aes.decrypt(encryptedSessionKey, userKey);
 
   return decryptedSessionKey;
 };
 
-const encryptMessage = ({ sessionKey, message }) => {
-  const encrypted = CryptoJS.AES.encrypt(message, sessionKey).toString();
+const encryptMessage = async ({ sessionKey, message }) => {
+  const encrypted = await Aes.encrypt(message, sessionKey);
   return encrypted;
 };
 
-const decryptMessage = ({ sessionKey, encryptedMessage }) => {
-  const decrypted = CryptoJS.AES.decrypt(encryptedMessage, sessionKey).toString(CryptoJS.enc.Utf8);
+const decryptMessage = async ({ sessionKey, encryptedMessage }) => {
+  const decrypted = await Aes.decrypt(encryptedMessage, sessionKey);
   return decrypted;
 };
 
-export const encryptToken = ({ userKey, token }) => {
-    let encJson = CryptoJS.AES.encrypt(JSON.stringify(token), userKey).toString();
-    let encData = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(encJson));
-    return encData;
+const encryptData = (text, key) => {
+    return Aes.randomKey(16).then(iv => {
+        return Aes.encrypt(text, key, iv, 'aes-256-cbc').then(cipher => ({
+            cipher,
+            iv,
+        }))
+    });
 };
 
-export const decryptToken = ({ userKey, encryptedToken }) => {
-    let decData = CryptoJS.enc.Base64.parse(encryptedToken).toString(CryptoJS.enc.Utf8);
-    let bytes = CryptoJS.AES.decrypt(decData, userKey).toString(CryptoJS.enc.Utf8);
-    return JSON.parse(bytes);
+const decryptData = (encryptedData, key) => Aes.decrypt(encryptedData.cipher, key, encryptedData.iv, 'aes-256-cbc');
+
+export const encryptToken = async ({ userKey, token }) => {
+    const encJson = JSON.stringify(token);
+    return encryptData(encJson, userKey);
 };
+
+export const decryptToken = async ({ userKey, encryptedToken }) => {
+    const decryptedData = await decryptData(encryptedToken, userKey);
+    const decJson = JSON.parse(decryptedData);
+    return decJson;
+};
+
 
 export default { establishSession, encryptMessage, decryptMessage, encryptToken, decryptToken, generateKeys };

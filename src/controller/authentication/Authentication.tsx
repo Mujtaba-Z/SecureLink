@@ -11,10 +11,10 @@ const Login = async (email: string, password: string) => {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         const token = user.accessToken;
-        const { userKey } = generateKeys();
+        const { userKey } = await generateKeys();
         await AsyncStorage.setItem('token', token);
         await AsyncStorage.setItem('userKey', userKey);
-        const encryptedToken = encryptToken({ userKey: userKey, token });
+        const encryptedToken = await encryptToken({ userKey: userKey, token });
         await updateDoc(doc(db, 'users', user.uid), {
             accessToken: encryptedToken,
         });
