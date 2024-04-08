@@ -5,14 +5,18 @@ import { set } from 'firebase/database';
 
 const setAwardsDoc = async (awardsInfo: AwardsInformation) => {
     try {
+        // Check if points is undefined, if so, set it to a default value
+        const points = awardsInfo.points !== undefined ? awardsInfo.points : 0;
+
         await setDoc(doc(db, 'awards', awardsInfo.employeeID), {
             employeeID: awardsInfo.employeeID,
             name: awardsInfo.name,
             awardsInfo: awardsInfo.awardsInfo,
             awarded: awardsInfo.awarded,
-            points: awardsInfo.points
+            points: points // Use the points variable which now contains a defined value
         });
     } catch (error) {
+        console.log('Awards', awardsInfo);
         console.error('Error setting awards doc:', error);
     }
 }

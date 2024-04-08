@@ -11,10 +11,12 @@ const getAccountDetails = async () => {
         const querySnapshot = await getDocs(collection(db, 'users'));
         let result = null;
 
-        for (const doc of querySnapshot.docs) {
+        await Promise.all(querySnapshot.docs.map(async (doc) => {
             const userData = doc.data();
             if (userData.accessToken) {
                 const decryptedToken = await decryptToken({ userKey: userKey, encryptedToken: userData.accessToken });
+                console.log(decryptedToken);
+                console.log(decryptedToken === token);
                 if (decryptedToken === token) {
                     result = {
                         employeeID: userData.employeeID,
@@ -27,10 +29,10 @@ const getAccountDetails = async () => {
                         dateOfBirth: userData.dateOfBirth,
                         leaderboardPoints: userData.leaderboardPoints,
                     };
-                    break; 
                 }
             }
-        }
+        }));
+        console.log(result);
         return result;
     } catch (error) {
         console.log(error);
