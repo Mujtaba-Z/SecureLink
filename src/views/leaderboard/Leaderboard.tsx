@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import { fetchLeaderboardData } from '../../controller/leaderboardManager/LeaderboardManager.tsx';
 import { giveAwardsToUsers } from '../../controller/awardsManager/AwardsManager.tsx';
+import { useNavigation } from '@react-navigation/native';
 
 import bronzeMedal from '../../assets/BronzeMedal.png';
 import silverMedal from '../../assets/SilverMedal.png';
@@ -10,6 +11,7 @@ import mvpMedal from '../../assets/MVPMedal.png';
 
 const ViewLeaderboard = () => {
     const [leaderboardData, setLeaderboardData] = useState([]);
+    const navigation = useNavigation();
 
     useEffect(() => {
         const fetchLeaderboard = async () => {
@@ -28,6 +30,10 @@ const ViewLeaderboard = () => {
 
         fetchLeaderboard();
     }, []);
+
+    const handlePress = (destination: string) => {
+        navigation.navigate(destination);
+    };
 
     return (
         <View style={styles.container}>
@@ -57,6 +63,21 @@ const ViewLeaderboard = () => {
                         }
                         return <Image key={index} source={medalImage} style={styles.medalImage} />;
                     })}
+                </View>
+
+                <View style={styles.navBar}>
+                    <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Home')}>
+                    <Text style={styles.navBarText}>Home</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Search')}>
+                    <Text style={styles.navBarText}>Search</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Profile')}>
+                    <Text style={styles.navBarText}>Profile</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Leaderboard')}>
+                    <Text style={styles.navBarText}>Leaderboard</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
             
@@ -93,6 +114,22 @@ const styles = StyleSheet.create({
         width: 30, // Adjust the width and height according to your design
         height: 30,
         marginLeft: 5, // Add some spacing between medal images and user information
+    },
+    navBar: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        backgroundColor: '#f0f0f0',
+        padding: 10,
+    },
+    navButton: {
+        padding: 10,
+    },
+    navBarText: {
+        fontSize: 20,
+        color: '#333',
     },
 });
 
