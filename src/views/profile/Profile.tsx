@@ -22,6 +22,10 @@ const ProfilePage: React.FC = () => {
     fetchProfile(); // Call fetchProfile when component mounts
   }, []); // Empty dependency array ensures the effect runs only once
 
+  // function for navigating to different screens
+  const handlePress = (destination: string) => {
+    navigation.navigate(destination);
+  };
 
   // function for updating profile details
   const handleUpdateField = async (field: string) => {
@@ -57,18 +61,14 @@ const ProfilePage: React.FC = () => {
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.detailsContainer}>
           {/* First, these details are not changeable */}
-          <Text style={styles.label}>EmployeeID:</Text>
-          <Text>{profileDetails.employeeID}</Text>
-          <Text style={styles.label}>Name:</Text>
-          <Text>{profileDetails.name}</Text>
-          <Text style={styles.label}>Email:</Text>
-          <Text>{profileDetails.email}</Text>
-          <Text style={styles.label}>Date of Birth:</Text>
-          <Text>{profileDetails.dateOfBirth}</Text>
+          <Text style={styles.label}>EmployeeID: {profileDetails.employeeID}</Text>
+          <Text style={styles.label}>Name: {profileDetails.name}</Text>
+          <Text style={styles.label}>Email: {profileDetails.email}</Text>
+          <Text style={styles.label}>Date of Birth: {profileDetails.dateOfBirth}</Text>
           
           {/* next details are changeable */}
           
-          <Text style={styles.label}>Phone:</Text>
+          <Text style={styles.label}>Phone: {profileDetails.phone}</Text>
           <View style={styles.fieldContainer}>
             <TextInput
               style={styles.input}
@@ -80,7 +80,7 @@ const ProfilePage: React.FC = () => {
             </TouchableOpacity>
           </View>
 
-          <Text style={styles.label}>Job Title:</Text>
+          <Text style={styles.label}>Job Title: {profileDetails.title}</Text>
           <View style={styles.fieldContainer}>
             <TextInput
               style={styles.input}
@@ -92,7 +92,7 @@ const ProfilePage: React.FC = () => {
             </TouchableOpacity>
           </View>
 
-          <Text style={styles.label}>Section:</Text>
+          <Text style={styles.label}>Section: {profileDetails.section}</Text>
           <View style={styles.fieldContainer}>
             <TextInput
               style={styles.input}
@@ -104,7 +104,7 @@ const ProfilePage: React.FC = () => {
             </TouchableOpacity>
           </View>
 
-          <Text style={styles.label}>Team:</Text>
+          <Text style={styles.label}>Team: {profileDetails.team}</Text>
           <View style={styles.fieldContainer}>
             <TextInput
               style={styles.input}
@@ -116,8 +116,23 @@ const ProfilePage: React.FC = () => {
             </TouchableOpacity>
           </View>
 
+          {/* Awards details */}
+          <Text style={styles.label}>Leaderboard Points: {profileDetails.Leaderboard}</Text>
+
         </View>
       </ScrollView>
+
+      <View style={styles.navBar}>
+        <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Home')}>
+          <Text>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Search')}>
+          <Text>Search</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Profile')}>
+          <Text>Profile</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
@@ -158,6 +173,20 @@ const styles = StyleSheet.create({
   updateButton: {
     color: 'blue',
     fontSize: 16,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  navButton: {
+    padding: 10,
+  },
+  navBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    backgroundColor: '#f0f0f0',
+    padding: 10,
   },
 });
 
