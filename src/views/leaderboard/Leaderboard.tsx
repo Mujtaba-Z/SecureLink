@@ -65,23 +65,23 @@ const ViewLeaderboard = () => {
                     })}
                 </View>
 
-                <View style={styles.navBar}>
-                    <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Home')}>
-                    <Text style={styles.navBarText}>Home</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Search')}>
-                    <Text style={styles.navBarText}>Search</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Profile')}>
-                    <Text style={styles.navBarText}>Profile</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Leaderboard')}>
-                    <Text style={styles.navBarText}>Leaderboard</Text>
-                    </TouchableOpacity>
-                </View>
             </View>
             
             ))}
+                <View style={styles.navBar}>
+                    <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Home')}>
+                        <Text style={styles.navBarText}>Home</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Search')}>
+                        <Text style={styles.navBarText}>Search</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Profile')}>
+                        <Text style={styles.navBarText}>Profile</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Leaderboard')}>
+                        <Text style={styles.navBarText}>Leaderboard</Text>
+                    </TouchableOpacity>
+                </View>
         </View>
     );
 };
