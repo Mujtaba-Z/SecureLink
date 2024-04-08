@@ -7,7 +7,6 @@ import { query } from 'firebase/firestore';
 
 const MainPage: React.FC = () => {
   const navigation = useNavigation();
-  const [chats, setChats] = useState<any[]>([]);
   const [employeeID, setEmployeeID] = useState<string>('example');
 
 
@@ -20,38 +19,19 @@ const MainPage: React.FC = () => {
   }, [employeeID])
 
   const handleSearch = async (currEmployee: string) => {
-    try{
-      setEmployeeID(currEmployee);
-      if(currEmployee.trim() !== ''){
-        const results = await DisplayChat(currEmployee)
-        setChats(results);
-      }else{
-        setChats([])
-      }
-    } catch (error){
-      console.log(error)
-      setChats([]);
-    }
+//     try{
+//       setEmployeeID(currEmployee);
+//       if(currEmployee.trim() !== ''){
+//         const results = await DisplayChat(currEmployee)
+//         setChats(results);
+//       }else{
+//         setChats([])
+//       }
+//     } catch (error){
+//       console.log(error)
+//       setChats([]);
+//     }
   }
-
-
-  // useEffect(() => {
-  //   // Fetch chats for the current user
-  //   async function fetchChats() {
-  //     try {
-  //       const currentUserID = await AsyncStorage.getItem('userID'); // Assuming you store the userID in AsyncStorage
-  //       if (currentUserID) {
-  //         const fetchedChats = await DisplayChat(currentUserID);
-  //         setChats(fetchedChats);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching chats:', error);
-  //     }
-  //   }
-    
-  //   fetchChats();
-  // }, []);
-
 
 
   const handleChatPress = (chatName: string) => {
@@ -73,14 +53,8 @@ const MainPage: React.FC = () => {
         <Text style={styles.text}>SecureLink</Text>
       </SafeAreaView>
       
-      <ScrollView style={styles.chatList}>
-        {chats.map((chat: any) => (
-          <TouchableOpacity key={chat.id} onPress={() => handleChatPress(chat.id)} style={styles.chatItem}>
-            <Text style={styles.chatName}>{chat.name}</Text>
-            <Text style={styles.lastMessage}>{chat.lastMessage}</Text>
-            <Text style={styles.time}>{chat.time}</Text>
-          </TouchableOpacity>
-        ))}
+      <ScrollView>
+
       </ScrollView>
 
       {/* Bottom Navigation Bar */}
