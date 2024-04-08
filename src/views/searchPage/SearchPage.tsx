@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Search } from '../../controller/search/Search';
+import { createChat } from '../../controller/chat/Chat';
 
 const SearchPage: React.FC = () => {
   const navigation = useNavigation();
@@ -22,7 +23,7 @@ const SearchPage: React.FC = () => {
 
   const handleSearch = async (query: string) => {
     try {
-      setSearchQuery(query); 
+      setSearchQuery(query);
       if (query.trim() !== '') {
         const results = await Search(query);
         setFilteredEmployees(results);
@@ -35,9 +36,21 @@ const SearchPage: React.FC = () => {
     }
   };
 
-  const handleMessage = (employee: any) => {
-    console.log("Message button pressed for employee:", employee);
-  };  
+  const handleMessage = async (employee: any) => {
+    const currentUserId = 'manan';
+    const employeeId = employee.employeeId;
+    console.log("employee messaged: " + employee)
+    try {
+      const chatDocRef = await createChat(currentUserId, employeeId);
+      if (chatDocRef.id) {
+        navigation.navigate('ChatPage', { chatId: chatDocRef.id, chatName: employee.name });
+      } else {
+        console.error("Failed to navigate: No chatDocRef ID.");
+      }
+    } catch (error) {
+      console.error("Failed to create chat:", error);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -63,13 +76,13 @@ const SearchPage: React.FC = () => {
 </ScrollView>
       <View style={styles.navBar}>
         <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Home')}>
-          <Text>Home</Text>
+          <Text style={styles.navBarText}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Search')}>
-          <Text>Search</Text>
+          <Text style={styles.navBarText}>Search</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Profile')}>
-          <Text>Profile</Text>
+          <Text style={styles.navBarText}>Profile</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -84,15 +97,19 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 30,
     marginTop: 20,
+    marginBottom: 20,
+    color: '#333',
   },
   searchInput: {
     width: '90%',
-    height: 40,
-    borderWidth: 1,
-    borderColor: '#cccccc',
+    height: 50,
+    borderWidth: 2,
+    borderColor: '#333',
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 10,
+    fontSize: 20,
+
   },
   employeeList: {
     flex: 1,
@@ -100,12 +117,13 @@ const styles = StyleSheet.create({
   },
   employeeItem: {
     padding: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#cccccc',
+    borderTopWidth: 1,
+    borderTopColor: '#333',
   },
   employeeName: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#333',
   },
   employeeDepartment: {
     fontSize: 16,
@@ -119,9 +137,14 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#f0f0f0',
     padding: 10,
+
   },
   navButton: {
     padding: 10,
+  },
+  navBarText: {
+    fontSize: 20,
+    color: '#333',
   },
   messageButton: {
     backgroundColor: '#007bff',

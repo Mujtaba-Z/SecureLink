@@ -1,28 +1,36 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserInformation from '../../model/UserInformation.js';
 import {db} from '../firebase.js';
-import {getDocs, collection, setDoc} from 'firebase/firestore';
+import {getDocs, collection, updateDoc} from 'firebase/firestore';
+import { decryptToken } from '../kdc/KDC.tsx';
 
 const getAccountDetails = async () => {
     try {
-        const token = AsyncStorage.getItem('token');
+        const userKey = await AsyncStorage.getItem('userKey');
+        const token = await AsyncStorage.getItem('token');
         const querySnapshot = await getDocs(collection(db, 'users'));
         let result = {};
+        
         querySnapshot.forEach((doc) => {
             const userData = doc.data();
-            if (userData.accessToken === token) {
-                result = {
-                    employeeID: userData.employeeID,
-                    name: userData.name,
-                    section: userData.section,
-                    email: userData.email,
-                    title: userData.title,
-                    phone: userData.phone,
-                    team: userData.team,
-                    dateOfBirth: userData.dateOfBirth,
-                };
+            if (userData.accessToken) {
+                const decryptedToken = decryptToken({ userKey: userKey, encryptedToken: userData.accessToken});
+                const verification = decryptedToken === token;
+                if (verification) {
+                    result = {
+                        employeeID: userData.employeeID,
+                        name: userData.name,
+                        section: userData.section,
+                        email: userData.email,
+                        title: userData.title,
+                        phone: userData.phone,
+                        team: userData.team,
+                        dateOfBirth: userData.dateOfBirth,
+                        leaderboardPoints: userData.leaderboardPoints,
+                    };
+                }
             }
-        });
+         });
         return result;
     } catch (error) {
         console.log(error);
@@ -30,14 +38,17 @@ const getAccountDetails = async () => {
     }
 };
 
+
 const changeJobTitle = async (employeeID: string, newTitle: string) => {
     try {
         const querySnapshot = await getDocs(collection(db, 'users'));
         querySnapshot.forEach((doc) => {
             const userData = doc.data();
             if (userData.employeeID === employeeID) {
-                userData.title = newTitle;
-                setDoc(doc, userData);
+                const docRef = doc.ref;
+                updateDoc(docRef, {
+                    title: newTitle,
+                });
             }
         });
     } catch (error) {
@@ -45,14 +56,16 @@ const changeJobTitle = async (employeeID: string, newTitle: string) => {
     }
 };
 
-const changeComapanySection = async (employeeID: string, newSection: string) => {
+const changeCompanySection = async (employeeID: string, newSection: string) => {
     try {
         const querySnapshot = await getDocs(collection(db, 'users'));
         querySnapshot.forEach((doc) => {
             const userData = doc.data();
             if (userData.employeeID === employeeID) {
-                userData.section = newSection;
-                setDoc(doc, userData);
+                const docRef = doc.ref;
+                updateDoc(docRef, {
+                    section: newSection,
+                });
             }
         });
     } catch (error) {
@@ -66,8 +79,10 @@ const changePhone = async (employeeID: string, newPhone: string) => {
         querySnapshot.forEach((doc) => {
             const userData = doc.data();
             if (userData.employeeID === employeeID) {
-                userData.phone = newPhone;
-                setDoc(doc, userData);
+                const docRef = doc.ref;
+                updateDoc(docRef, {
+                    phone: newPhone,
+                });
             }
         });
     } catch (error) {
@@ -81,8 +96,10 @@ const changeTeamName = async (employeeID: string, newTeam: string) => {
         querySnapshot.forEach((doc) => {
             const userData = doc.data();
             if (userData.employeeID === employeeID) {
-                userData.team = newTeam;
-                setDoc(doc, userData);
+                const docRef = doc.ref;
+                updateDoc(docRef, {
+                    team: newTeam,
+                });
             }
         });
     } catch (error) {
@@ -112,8 +129,9 @@ const changeTeamManager = async (employeeID: string, newManager: UserInformation
         querySnapshot.forEach((doc) => {
             const userData = doc.data();
             if (userData.employeeID === employeeID) {
-                userData.teamManager = newManager;
-                setDoc(doc, userData);
+                updateDoc(doc, {
+                    teamManager: newManager,
+                });
             }
         });
     } catch (error) {
@@ -121,4 +139,4 @@ const changeTeamManager = async (employeeID: string, newManager: UserInformation
     }
 };
 
-export {getAccountDetails, changeJobTitle, changeComapanySection, changePhone, changeTeamName, deleteAccount, changeTeamManager}; 
+export { getAccountDetails, changeCompanySection, changePhone, changeTeamName, deleteAccount, changeTeamManager, changeJobTitle };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { getAccountDetails, changeComapanySection, changeJobTitle, changePhone, changeTeamName } from '../../controller/accountManager/AccountManager.tsx';
+import { getAccountDetails, changeCompanySection, changeJobTitle, changePhone, changeTeamName } from '../../controller/accountManager/AccountManager.tsx';
 
 const ProfilePage: React.FC = () => {
   const navigation = useNavigation();
@@ -25,29 +25,28 @@ const ProfilePage: React.FC = () => {
 
   // function for updating profile details
   const handleUpdateField = async (field: string) => {
-    try {const value = editableFields[field];
-    switch (field) {
-      case 'jobTitle':
-        await changeJobTitle(profileDetails.employeeID, value);
-        break;
-      case 'companySection':
-        await changeComapanySection(profileDetails.employeeID, value);
-        break;
-      case 'phone':
-        await changePhone(profileDetails.employeeID, value);
-        break;
-      case 'team':
-        await changeTeamName(profileDetails, value);
-        break;
-      default:
-        break;
-    }
-    // update profile details after change
-    const updatedDetails = await getAccountDetails();
-    setProfileDetails(updatedDetails);
-    }
-
-    catch (error) {
+    try {
+      const value = editableFields[field];
+      switch (field) {
+        case 'jobTitle':
+          await changeJobTitle(profileDetails.employeeID, value);
+          break;
+        case 'companySection':
+          await changeCompanySection(profileDetails.employeeID, value);
+          break;
+        case 'phone':
+          await changePhone(profileDetails.employeeID, value);
+          break;
+        case 'team':
+          await changeTeamName(profileDetails.employeeID, value); // Fixed passing employeeID instead of profileDetails
+          break;
+        default:
+          break;
+      }
+      // update profile details after change
+      const updatedDetails = await getAccountDetails();
+      setProfileDetails(updatedDetails);
+    } catch (error) {
       console.log(error);
     }
   };

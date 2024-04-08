@@ -16,6 +16,8 @@ const SignupPage = () => {
     const [teamName, setTeamName] = useState('');
     const [DOB, setDOB] = useState('');
 
+    const leaderboardPoints = 0;
+
     const handleSignup = async () => {
         // Implement signup logic here
         console.log('Signup with:');
@@ -23,7 +25,8 @@ const SignupPage = () => {
         console.log('Password:', password);
         console.log('Name:', name);
         console.log('Employee ID:', employeeID);
-        const userReg = new UserInformation(employeeID, name, email, password, section, title, phoneNum, teamName, DOB);
+        console.log('Leaderboard points:', leaderboardPoints)
+        const userReg = new UserInformation(employeeID, name, email, password, section, title, phoneNum, teamName, DOB, leaderboardPoints);
         try {
           const user = await Register(userReg);
           console.log(user);
