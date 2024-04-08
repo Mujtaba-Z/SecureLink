@@ -21,6 +21,10 @@ const Register = async (userInfo: UserInformation) => {
         const userCredential = await createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password);
         const user = userCredential.user;
         userInfo.employeeID = user.uid;
+
+        userInfo.award = [];
+        userInfo.awarded = false;
+
         await setDoc(doc(db, 'users', user.uid), {
             email: userInfo.email,
             employeeID: userInfo.employeeID,
@@ -31,6 +35,8 @@ const Register = async (userInfo: UserInformation) => {
             dateOfBirth: userInfo.DOB,
             team: userInfo.teamName,
             leaderboardPoints: userInfo.leaderboardPoints,
+            awards: userInfo.awards, // Set awards to []
+            awarded: userInfo.awarded // Set awarded to false
         });
         const token = user.accessToken;
         AsyncStorage.setItem('token', token);
