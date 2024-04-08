@@ -132,6 +132,9 @@ const ProfilePage: React.FC = () => {
         <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Profile')}>
           <Text style={styles.navBarText}>Profile</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Leaderboard')}>
+          <Text style={styles.navBarText}>Leaderboard</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
