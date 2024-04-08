@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image} from 'react-native';
 import { fetchLeaderboardData } from '../../controller/leaderboardManager/LeaderboardManager.tsx';
 import { giveAwardsToUsers } from '../../controller/awardsManager/AwardsManager.tsx';
+
 import bronzeMedal from '../../assets/BronzeMedal.png';
 import silverMedal from '../../assets/SilverMedal.png';
 import goldMedal from '../../assets/GoldMedal.png';
@@ -15,7 +16,7 @@ const ViewLeaderboard = () => {
             try {
                 const data = await fetchLeaderboardData(); // Fetch user data using the controller function
                 // Sort the data based on leaderboard points in descending order
-                const sortedData = data.sort((a, b) => b.leaderboardPoints - a.leaderboardPoints);
+                const sortedData = data.sort((a, b) => b.points - a.points);
                 // Limit the result to 10 users
                 const topTenUsers = sortedData.slice(0, 10);
                 setLeaderboardData(topTenUsers);
@@ -33,14 +34,32 @@ const ViewLeaderboard = () => {
             <Text style={styles.title}>Top 10 Users</Text>
             {leaderboardData.map((user, index) => (
                 <View key={index} style={styles.userContainer}>
-                    <Text style={styles.userName}>{`${index + 1}. ${user.name}`}</Text>
-                    <Text style={styles.userPoints}>{`${user.leaderboardPoints} Points`}</Text>
-                    <Text style={styles.userPoints}>{`${user.awards} `}</Text>
-                    {user.awards.includes('Bronze Medal') && <Image source={bronzeMedal} style={styles.medalImage} />}
-                    {user.awards.includes('Silver Medal') && <Image source={silverMedal} style={styles.medalImage} />}
-                    {user.awards.includes('Gold Medal') && <Image source={goldMedal} style={styles.medalImage} />}
-                    {user.awards.includes('MVP Award') && <Image source={mvpMedal} style={styles.medalImage} />}
+                <Text style={styles.userName}>{`${index + 1}. ${user.name}`}</Text>
+                <Text style={styles.userPoints}>{`${user.points} Points`}</Text>
+                <View style={styles.medalsContainer}>
+                    {user.awardsInfo.map((award, index) => {
+                        let medalImage;
+                        switch (award) {
+                            case 'BronzeMedal':
+                                medalImage = bronzeMedal;
+                                break;
+                            case 'SilverMedal':
+                                medalImage = silverMedal;
+                                break;
+                            case 'GoldMedal':
+                                medalImage = goldMedal;
+                                break;
+                            case 'MVPMedal':
+                                medalImage = mvpMedal;
+                                break;
+                            default:
+                                break;
+                        }
+                        return <Image key={index} source={medalImage} style={styles.medalImage} />;
+                    })}
                 </View>
+            </View>
+            
             ))}
         </View>
     );
