@@ -16,5 +16,5 @@ export const createChat = async (currentUserId: string, employeeId: string) => {
   } catch (error) {
     console.error("Failed to create chat:", error);
     return error;
-  }
+  } 
 };
