@@ -45,9 +45,15 @@ export const encryptToken = async ({ userKey, token }) => {
 };
 
 export const decryptToken = async ({ userKey, encryptedToken }) => {
+  try {
+
     const decryptedData = await decryptData(encryptedToken, userKey);
     const decJson = JSON.parse(decryptedData);
+
     return decJson;
+  } catch (error) {
+    console.log('Error decrypting token:', error);
+  }
 };
 
 
