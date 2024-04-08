@@ -117,7 +117,7 @@ const ProfilePage: React.FC = () => {
           </View>
 
           {/* Awards details */}
-          <Text style={styles.label}>Leaderboard Points: {profileDetails.Leaderboard}</Text>
+          <Text style={styles.label}>Leaderboard Points: {profileDetails.leaderboardPoints}</Text>
 
         </View>
       </ScrollView>
