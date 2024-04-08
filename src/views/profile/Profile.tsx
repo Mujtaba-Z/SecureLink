@@ -124,13 +124,13 @@ const ProfilePage: React.FC = () => {
 
       <View style={styles.navBar}>
         <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Home')}>
-          <Text>Home</Text>
+          <Text style={styles.navBarText}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Search')}>
-          <Text>Search</Text>
+          <Text style={styles.navBarText}>Search</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Profile')}>
-          <Text>Profile</Text>
+          <Text style={styles.navBarText}>Profile</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -187,6 +187,10 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#f0f0f0',
     padding: 10,
+  },
+  navBarText: {
+    fontSize: 20,
+    color: '#333',
   },
 });
 
