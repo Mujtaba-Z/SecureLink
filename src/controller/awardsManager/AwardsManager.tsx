@@ -33,24 +33,25 @@ export const giveAwardsToUsers = async () => {
         // Iterate over user data
         querySnapshot.forEach(async doc2 => {
             const userData = doc2.data();
-            const userAwards = [];
+            let bestAward = null;
 
             // Check user's points against award thresholds
             awardThresholds.forEach(threshold => {
                 if (userData.leaderboardPoints >= threshold.points) {
-                    userAwards.push(threshold.award);
+                    bestAward = threshold.award;
                 }
             });
 
-            
+            const points = userData.points || 0;
+
             // Award users
-            if (userAwards.length > 0) {
+            if (bestAward !== null) {
                 // Update user's data with awarded status and awards received
-                const awardsInfo = new AwardsInformation(userData.points, userAwards, userData.employeeID, true, userData.name);
+                const awardsInfo = new AwardsInformation(points, [bestAward], userData.employeeID, true, userData.name);
                setAwardsDoc(awardsInfo);
-            } else if (userAwards.length === 0) {
-                // Update user's data with awarded status and awards received
-                const awardsInfo = new AwardsInformation(userData.points, userAwards, userData.employeeID, false, userData.name);
+            } else {
+                // No award
+                const awardsInfo = new AwardsInformation(points, [], userData.employeeID, false, userData.name);
                 setAwardsDoc(awardsInfo);
             }
         });

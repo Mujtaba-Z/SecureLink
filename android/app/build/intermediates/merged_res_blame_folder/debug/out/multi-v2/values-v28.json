@@ -4,7 +4,11 @@
             "outputFile": "com.awesomeproject.app-mergeDebugResources-38:/values-v28/values-v28.xml",
             "map": [
                 {
+<<<<<<< HEAD
                     "source": "C:\\Users\\mujta\\.gradle\\caches\\transforms-3\\858dc591faff319c774fa62ec5f4cdb2\\transformed\\appcompat-1.6.1\\res\\values-v28\\values-v28.xml",
+=======
+                    "source": "C:\\Users\\Daniel Hu\\.gradle\\caches\\transforms-3\\858dc591faff319c774fa62ec5f4cdb2\\transformed\\appcompat-1.6.1\\res\\values-v28\\values-v28.xml",
+>>>>>>> 2471d869ea60bd2bc4cbd3af4704951c54a3977b
                     "from": {
                         "startLines": "2,3,4,8",
                         "startColumns": "4,4,4,4",
@@ -23,7 +27,11 @@
                     }
                 },
                 {
+<<<<<<< HEAD
                     "source": "C:\\Users\\mujta\\.gradle\\caches\\transforms-3\\6fa0a582f3bc1491de217eb03eca51c1\\transformed\\material-1.9.0\\res\\values-v28\\values-v28.xml",
+=======
+                    "source": "C:\\Users\\Daniel Hu\\.gradle\\caches\\transforms-3\\6fa0a582f3bc1491de217eb03eca51c1\\transformed\\material-1.9.0\\res\\values-v28\\values-v28.xml",
+>>>>>>> 2471d869ea60bd2bc4cbd3af4704951c54a3977b
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4",

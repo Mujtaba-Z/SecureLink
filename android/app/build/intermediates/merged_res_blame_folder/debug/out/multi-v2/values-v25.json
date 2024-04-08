@@ -4,7 +4,11 @@
             "outputFile": "com.awesomeproject.app-mergeDebugResources-38:/values-v25/values-v25.xml",
             "map": [
                 {
+<<<<<<< HEAD
                     "source": "C:\\Users\\mujta\\.gradle\\caches\\transforms-3\\858dc591faff319c774fa62ec5f4cdb2\\transformed\\appcompat-1.6.1\\res\\values-v25\\values-v25.xml",
+=======
+                    "source": "C:\\Users\\Daniel Hu\\.gradle\\caches\\transforms-3\\858dc591faff319c774fa62ec5f4cdb2\\transformed\\appcompat-1.6.1\\res\\values-v25\\values-v25.xml",
+>>>>>>> 2471d869ea60bd2bc4cbd3af4704951c54a3977b
                     "from": {
                         "startLines": "2,3,4,6",
                         "startColumns": "4,4,4,4",
