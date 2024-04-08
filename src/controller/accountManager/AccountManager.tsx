@@ -38,6 +38,25 @@ const getAccountDetails = async () => {
     }
 };
 
+const getEmployeeName = async (employeeID: string) => {
+    try {
+        const querySnapshot = await getDocs(collection(db, 'users'));
+        let result = null;
+
+        for (const doc of querySnapshot.docs) {
+            const userData = doc.data();
+            if (userData.employeeID === employeeID) {
+                result = userData.name;
+                break;
+            }
+        }
+        return result;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 
 
 const changeJobTitle = async (employeeID: string, newTitle: string) => {
@@ -140,4 +159,4 @@ const changeTeamManager = async (employeeID: string, newManager: UserInformation
     }
 };
 
-export { getAccountDetails, changeCompanySection, changePhone, changeTeamName, deleteAccount, changeTeamManager, changeJobTitle };
+export { getAccountDetails, changeCompanySection, changePhone, changeTeamName, deleteAccount, changeTeamManager, changeJobTitle, getEmployeeName };

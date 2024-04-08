@@ -1,5 +1,22 @@
 import { db } from '../firebase.js';
-import { getDocs, collection, query, where, updateDoc, doc } from 'firebase/firestore';
+import { getDocs, collection, setDoc, doc, updateDoc } from 'firebase/firestore';
+import AwardsInformation from '../../model/AwardsInformation.js';
+import { set } from 'firebase/database';
+
+const setAwardsDoc = async (awardsInfo: AwardsInformation) => {
+    try {
+        await setDoc(doc(db, 'awards', awardsInfo.employeeID), {
+            employeeID: awardsInfo.employeeID,
+            name: awardsInfo.name,
+            awardsInfo: awardsInfo.awardsInfo,
+            awarded: awardsInfo.awarded,
+            points: awardsInfo.points
+        });
+    } catch (error) {
+        console.error('Error setting awards doc:', error);
+    }
+}
+
 
 export const giveAwardsToUsers = async () => {
     try {
@@ -11,13 +28,11 @@ export const giveAwardsToUsers = async () => {
             { points: 5000, award: 'MVPMedal' } // Example threshold for MVP award
         ];
 
-        const querySnapshot = await getDocs(
-          collection(db, 'users')
-        );
+        const querySnapshot = await getDocs(collection(db, 'users'));
 
         // Iterate over user data
-        querySnapshot.forEach(doc => {
-            const userData = doc.data();
+        querySnapshot.forEach(async doc2 => {
+            const userData = doc2.data();
             const userAwards = [];
 
             // Check user's points against award thresholds
@@ -27,13 +42,16 @@ export const giveAwardsToUsers = async () => {
                 }
             });
 
+            
             // Award users
             if (userAwards.length > 0) {
                 // Update user's data with awarded status and awards received
-                updateDoc(doc.ref, {
-                    awarded: true,
-                    awards: userAwards
-                });
+                const awardsInfo = new AwardsInformation(userData.points, userAwards, userData.employeeID, true, userData.name);
+               setAwardsDoc(awardsInfo);
+            } else if (userAwards.length === 0) {
+                // Update user's data with awarded status and awards received
+                const awardsInfo = new AwardsInformation(userData.points, userAwards, userData.employeeID, false, userData.name);
+                setAwardsDoc(awardsInfo);
             }
         });
 
