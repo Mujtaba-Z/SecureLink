@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView} from 'react-native';
 import { fetchLeaderboardData } from '../../controller/leaderboardManager/LeaderboardManager.tsx';
 import { giveAwardsToUsers } from '../../controller/awardsManager/AwardsManager.tsx';
 import { useNavigation } from '@react-navigation/native';
@@ -40,57 +40,57 @@ const ViewLeaderboard = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Top 10 Users</Text>
-            {leaderboardData.map((user, index) => (
-                <View key={index} style={styles.userContainer}>
-                <Text style={styles.userName}>{`${index + 1}. ${user.name}`}</Text>
-                <Text style={styles.userPoints}>{`${user.points} Points`}</Text>
-                <View style={styles.medalsContainer}>
-                    {user.awardsInfo.map((award, index) => {
-                        let medalImage;
-                        switch (award) {
-                            case 'BronzeMedal':
-                                medalImage = bronzeMedal;
-                                break;
-                            case 'SilverMedal':
-                                medalImage = silverMedal;
-                                break;
-                            case 'GoldMedal':
-                                medalImage = goldMedal;
-                                break;
-                            case 'MVPMedal':
-                                medalImage = mvpMedal;
-                                break;
-                            default:
-                                break;
-                        }
-                        return <Image key={index} source={medalImage} style={styles.medalImage} />;
-                    })}
-                </View>
-
+            <ScrollView>
+                <Text style={styles.title}>Top 10 Users</Text>
+                {leaderboardData.map((user, index) => (
+                    <View key={index} style={styles.userContainer}>
+                        <Text style={styles.userName}>{`${index + 1}. ${user.name}`}</Text>
+                        <Text style={styles.userPoints}>{`${user.points} Points`}</Text>
+                        <View style={styles.medalsContainer}>
+                            {user.awardsInfo.map((award, index) => {
+                                let medalImage;
+                                switch (award) {
+                                    case 'BronzeMedal':
+                                        medalImage = bronzeMedal;
+                                        break;
+                                    case 'SilverMedal':
+                                        medalImage = silverMedal;
+                                        break;
+                                    case 'GoldMedal':
+                                        medalImage = goldMedal;
+                                        break;
+                                    case 'MVPMedal':
+                                        medalImage = mvpMedal;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                return <Image key={index} source={medalImage} style={styles.medalImage} />;
+                            })}
+                        </View>
+                    </View>
+                ))}
+            </ScrollView>
+            <View style={styles.navBar}>
+                <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Home')}>
+                    <Text style={styles.navBarText}>Home</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Search')}>
+                    <Text style={styles.navBarText}>Search</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Profile')}>
+                    <Text style={styles.navBarText}>Profile</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Leaderboard')}>
+                    <Text style={styles.navBarText}>Leaderboard</Text>
+                </TouchableOpacity>
             </View>
-            
-            ))}
-                <View style={styles.navBar}>
-                    <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Home')}>
-                        <Text style={styles.navBarText}>Home</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Search')}>
-                        <Text style={styles.navBarText}>Search</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Profile')}>
-                        <Text style={styles.navBarText}>Profile</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Leaderboard')}>
-                        <Text style={styles.navBarText}>Leaderboard</Text>
-                    </TouchableOpacity>
-                </View>
         </View>
     );
 };
 
 
-// Styles
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
