@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {db} from '../../controller/firebase.js';
 import {getDocs, collection, onSnapshot, query} from 'firebase/firestore';
 import { getEmployeeName } from '../../controller/accountManager/AccountManager.tsx';
+import { deleteChat } from '../../controller/chat/Chat.tsx';
 
 const MainPage: React.FC = () => {
   const navigation = useNavigation();
@@ -21,6 +22,11 @@ const MainPage: React.FC = () => {
   // function for navigating to different screens
   const handleChatPress = (chatName: string, chatter2: string, chatID: string ) => {
     navigation.navigate('ChatPage', { chatID: chatID, chatName: chatN, employeeId: chatter2, currentUserId: employeeID});
+  };
+
+  // function to delete chat
+  const handleDeleteChat = async (chatID: string) => {
+    await deleteChat(chatID);
   };
 
   // function for navigating to different screens
@@ -89,6 +95,7 @@ const MainPage: React.FC = () => {
         employeeID={employeeID} 
         handleChatPress={() => handleChatPress(room.name, currentUserId, room.chatID)}
         name={room.Chatter1 === employeeID ? room.chatter2Name : room.chatter1Name}
+        handleDeleteChat={handleDeleteChat}
       />
       ))}
   </>
@@ -115,7 +122,7 @@ const MainPage: React.FC = () => {
 };
 
 // MessageCard component
-const MessageCard = ({ room, index, employeeID, handleChatPress, name }) => {
+const MessageCard = ({ room, index, employeeID, handleChatPress, name, handleDeleteChat }) => {
   return (
     <TouchableOpacity style={styles.messageBox} onPress={() => handleChatPress(room.name)}>
       <Text style={styles.messageNumber}>{index + 1}</Text>
@@ -123,6 +130,9 @@ const MessageCard = ({ room, index, employeeID, handleChatPress, name }) => {
         <Text style={styles.messageName}>{name}</Text>
         <Text style={styles.messageText}>{room.Chatter1 === employeeID ? room.Chatter2 : room.Chatter1}</Text>
       </View>
+      <TouchableOpacity onPress={() => handleDeleteChat(room.chatID)}>
+        <Text style={styles.deleteButton}>Delete</Text>
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 };
@@ -203,6 +213,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
   },
+  deleteButton: {
+    color: 'red',
+    marginLeft: 10,
+  }
 });
 
 

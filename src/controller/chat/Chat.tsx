@@ -1,5 +1,5 @@
 import { db } from '../firebase';
-import { collection, addDoc, serverTimestamp, updateDoc, getDocs, arrayUnion, doc, getDoc, setDoc } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, updateDoc, getDocs, arrayUnion, doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import { generateKeys, encryptSessionKey,encryptMessage, decryptMessage } from '../kdc/KDC';
 import { getEmployeeName } from '../accountManager/AccountManager.tsx';
 
@@ -146,4 +146,17 @@ const checkExistingChat = async (chatter1, chatter2) => {
     return false;
   }
 };
+
+export const deleteChat = async (chatID) => {
+  try {
+    // Get the chat document
+    const chatDocRef = doc(db, 'chats', chatID);
+
+    // Delete the chat document
+    await deleteDoc(chatDocRef);
+  } catch (error) {
+    console.error("Failed to delete chat:", error);
+    return error;
+  }
+}
 

@@ -1,8 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserInformation from '../../model/UserInformation.js';
 import {db} from '../firebase.js';
-import {getDocs, collection, updateDoc} from 'firebase/firestore';
+import {getDocs, collection, updateDoc, deleteDoc} from 'firebase/firestore';
 import { decryptToken } from '../kdc/KDC.tsx';
+import firebase from 'firebase/compat/app';
 
 // Function to get account details
 const getAccountDetails = async () => {
@@ -204,7 +205,7 @@ const deleteAccount = async (employeeID: string, email: string, password: string
 
         // Get all users from the database
         const querySnapshot = await getDocs(collection(db, 'users'));
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach(async (doc) => {
             const userData = doc.data();
 
             // Check if the employee ID, email, and password match the given values
@@ -212,7 +213,10 @@ const deleteAccount = async (employeeID: string, email: string, password: string
                 if (userData.email === email && userData.password === password) {
 
                     // Delete the user's document
-                    doc.delete();
+                    const user = firebase.auth().currentUser;
+                    if (user) {
+                        await user.delete();
+                    }
                 }
             }
         });

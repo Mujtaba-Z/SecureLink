@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity, TextInput, ScrollView, Modal } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { getAccountDetails, changeCompanySection, changeJobTitle, changePhone, changeTeamName } from '../../controller/accountManager/AccountManager.tsx';
+import { getAccountDetails, changeCompanySection, changeJobTitle, changePhone, changeTeamName, deleteAccount } from '../../controller/accountManager/AccountManager.tsx';
 
 const ProfilePage: React.FC = () => {
   const navigation = useNavigation();
 
   // State variables to store profile details and editable fields
   const [profileDetails, setProfileDetails] = useState<any>({}); 
+  const [verificationModalVisible, setVerificationModalVisible] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [editableFields, setEditableFields] = useState<any>({
     jobTitle: '',
     companySection: '',
@@ -56,6 +59,22 @@ const ProfilePage: React.FC = () => {
       console.log(error);
     }
   };
+
+ // function for deleting the account
+ const handleDeleteAccount = async () => {
+  setVerificationModalVisible(true);
+};
+
+const handleDeleteConfirmation = async () => {
+  try {
+    await deleteAccount(profileDetails.employeeID, email, password);
+    // Navigate to some initial screen after account deletion
+    navigation.navigate('Login');
+  } catch (error) {
+    console.log(error);
+  }
+  setVerificationModalVisible(false);
+};
 
   return (
     <SafeAreaView style={styles.container}>
@@ -146,6 +165,12 @@ const ProfilePage: React.FC = () => {
             <Text style={styles.label}>Leaderboard Points:</Text>
             <Text style={styles.text}>{profileDetails.leaderboardPoints}</Text>
           </View>
+
+          {/* Delete Account Button */}
+          <TouchableOpacity onPress={handleDeleteAccount} style={styles.deleteButton}>
+            <Text style={styles.deleteButtonText}>Delete Account</Text>
+          </TouchableOpacity>
+
         </ScrollView>
       </View>
 
@@ -163,6 +188,38 @@ const ProfilePage: React.FC = () => {
           <Text style={styles.navBarText}>Leaderboard</Text>
         </TouchableOpacity>
       </View>
+
+      {/* Verification Modal */}
+      <Modal visible={verificationModalVisible} transparent animationType="fade">
+        <View style={styles.modalBackground}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>Confirm Deletion</Text>
+            <TextInput
+              style={styles.inputConfirm}
+              placeholder="Enter Email"
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+            />
+            <TextInput
+              style={styles.inputConfrim}
+              placeholder="Enter Password"
+              secureTextEntry={true}
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+            />
+            <View style={styles.modalButtonContainer}>
+              <TouchableOpacity style={styles.modalButton} onPress={handleDeleteConfirmation}>
+                <Text style={styles.modalButtonText}>Confirm</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.modalButton, styles.cancelButton]}
+                onPress={() => setVerificationModalVisible(false)}>
+                <Text style={styles.modalButtonText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -247,6 +304,62 @@ const styles = StyleSheet.create({
   navBarText: {
     fontSize: 16,
     color: '#333',
+  },
+  deleteButton: {
+    backgroundColor: 'red',
+    borderRadius: 5,
+    padding: 10,
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  deleteButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  modalBackground: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 20,
+    width: '80%',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  modalButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  modalButton: {
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: 'blue',
+    flex: 1,
+    margin: 5,
+  },
+  cancelButton: {
+    backgroundColor: 'red',
+  },
+  modalButtonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  inputConfirm: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
   },
 });
 
