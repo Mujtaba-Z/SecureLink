@@ -10,12 +10,16 @@ type ChatPageRouteParamList = {
 };
 
 const ChatPage: React.FC = () => {
+
+  // Get the route parameters
   const route = useRoute<RouteProp<ChatPageRouteParamList, 'ChatPage'>>();
   const { chatName } = route.params;
 
+  // State variables to store the message, and the list of messages
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<string[]>([]);
 
+  // Function to send a message
   const sendMessage = () => {
     if (message.trim().length > 0) {
       setMessages([...messages, message]);
@@ -47,6 +51,7 @@ const ChatPage: React.FC = () => {
   );
 };
 
+// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,

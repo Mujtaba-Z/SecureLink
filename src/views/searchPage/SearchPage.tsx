@@ -7,10 +7,13 @@ import { getEmployeeID } from '../../controller/accountManager/AccountManager.ts
 
 const SearchPage: React.FC = () => {
   const navigation = useNavigation();
+
+  // State variables to store search query and filtered employees
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filteredEmployees, setFilteredEmployees] = useState<any[]>([]);
   const [employeeID, setEmployeeID] = useState("");
 
+  // useEffect to handle search query changes
   useEffect(() => {
     if (searchQuery.trim() !== '') {
       handleSearch(searchQuery);
@@ -19,10 +22,12 @@ const SearchPage: React.FC = () => {
     }
   }, [searchQuery]);
 
+  // function for navigating to different screens
   const handlePress = (destination: string) => {
     navigation.navigate(destination);
   };
 
+  // function to handle search
   const handleSearch = async (query: string) => {
     try {
       setSearchQuery(query);
@@ -38,6 +43,7 @@ const SearchPage: React.FC = () => {
     }
   };
 
+  // function to handle messaging
   const handleMessage = async (employee: any) => {
 
     const fetchEmployeeID = async () => {
@@ -102,6 +108,7 @@ const SearchPage: React.FC = () => {
   );
 };
 
+// Update StyleSheet to define styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,

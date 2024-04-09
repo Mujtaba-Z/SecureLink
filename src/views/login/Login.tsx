@@ -5,9 +5,12 @@ import { Login } from "../../controller/authentication/Authentication.tsx";
 
 const LoginPage = () => {
   const navigation = useNavigation();
+
+  // State variables to store user input
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // Function to handle login
   const handleLogin = async () => {
     try {
       const user = await Login(email, password);
@@ -19,6 +22,7 @@ const LoginPage = () => {
     }
   };
 
+  // Function to handle registration
   const handleRegister = async () => {
       try {
         navigation.navigate('Signup');
@@ -68,6 +72,7 @@ const LoginPage = () => {
   );
 };
 
+// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
