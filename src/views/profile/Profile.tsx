@@ -59,70 +59,95 @@ const ProfilePage: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>Profile</Text>
-      <ScrollView style={styles.scrollContainer}>
-        <View style={styles.detailsContainer}>
-          {/* First, these details are not changeable */}
-          <Text style={styles.label}>EmployeeID: {profileDetails.employeeID}</Text>
-          <Text style={styles.label}>Name: {profileDetails.name}</Text>
-          <Text style={styles.label}>Email: {profileDetails.email}</Text>
-          <Text style={styles.label}>Date of Birth: {profileDetails.dateOfBirth}</Text>
-          
-          {/* next details are changeable */}
-          
-          <Text style={styles.label}>Phone: {profileDetails.phone}</Text>
-          <View style={styles.fieldContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder='Phone'
-              onChangeText={(text) => setEditableFields({ ...editableFields, phone: text })}
-            />
-            <TouchableOpacity onPress={() => handleUpdateField('phone')}>
-              <Text style={styles.updateButton}>Update</Text>
-            </TouchableOpacity>
+      <View style={styles.background}>
+        <ScrollView style={styles.scrollContainer}>
+
+        {/* First, these details are not changeable */}
+
+          <View style={styles.detailsContainer}>
+            <Text style={styles.header}>Profile</Text>
+            <View style={styles.details}>
+              <Text style={styles.label}>Employee ID:</Text>
+              <Text style={styles.text}>{profileDetails.employeeID}</Text>
+            </View>
+            <View style={styles.details}>
+              <Text style={styles.label}>Name:</Text>
+              <Text style={styles.text}>{profileDetails.name}</Text>
+            </View>
+            <View style={styles.details}>
+              <Text style={styles.label}>Email:</Text>
+              <Text style={styles.text}>{profileDetails.email}</Text>
+            </View>
+            <View style={styles.details}>
+              <Text style={styles.label}>Date of Birth:</Text>
+              <Text style={styles.text}>{profileDetails.dateOfBirth}</Text>
+            </View>
+
+            {/* next details are changeable */}
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Phone:</Text>
+              <View style={styles.inputWrapper}>
+                <TextInput
+                  style={styles.input}
+                  placeholder='Phone'
+                  onChangeText={(text) => setEditableFields({ ...editableFields, phone: text })}
+                />
+                <TouchableOpacity onPress={() => handleUpdateField('phone')}>
+                  <Text style={styles.updateButton}>Update</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Job Title:</Text>
+              <View style={styles.inputWrapper}>
+                <TextInput
+                  style={styles.input}
+                  placeholder='Title'
+                  onChangeText={(text) => setEditableFields({ ...editableFields, jobTitle: text })}
+                />
+                <TouchableOpacity onPress={() => handleUpdateField('jobTitle')}>
+                  <Text style={styles.updateButton}>Update</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Section:</Text>
+              <View style={styles.inputWrapper}>
+                <TextInput
+                  style={styles.input}
+                  placeholder='Section'
+                  onChangeText={(text) => setEditableFields({ ...editableFields, companySection: text })}
+                />
+                <TouchableOpacity onPress={() => handleUpdateField('companySection')}>
+                  <Text style={styles.updateButton}>Update</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Team:</Text>
+              <View style={styles.inputWrapper}>
+                <TextInput
+                  style={styles.input}
+                  placeholder='Team'
+                  onChangeText={(text) => setEditableFields({ ...editableFields, team: text })}
+                />
+                <TouchableOpacity onPress={() => handleUpdateField('team')}>
+                  <Text style={styles.updateButton}>Update</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            
+             {/* Awards details */}
+             
+            <Text style={styles.label}>Leaderboard Points:</Text>
+            <Text style={styles.text}>{profileDetails.leaderboardPoints}</Text>
           </View>
-
-          <Text style={styles.label}>Job Title: {profileDetails.title}</Text>
-          <View style={styles.fieldContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder='Title'
-              onChangeText={(text) => setEditableFields({ ...editableFields, jobTitle: text })}
-            />
-            <TouchableOpacity onPress={() => handleUpdateField('jobTitle')}>
-              <Text style={styles.updateButton}>Update</Text>
-            </TouchableOpacity>
-          </View>
-
-          <Text style={styles.label}>Section: {profileDetails.section}</Text>
-          <View style={styles.fieldContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder='Section'
-              onChangeText={(text) => setEditableFields({ ...editableFields, companySection: text })}
-            />
-            <TouchableOpacity onPress={() => handleUpdateField('companySection')}>
-              <Text style={styles.updateButton}>Update</Text>
-            </TouchableOpacity>
-          </View>
-
-          <Text style={styles.label}>Team: {profileDetails.team}</Text>
-          <View style={styles.fieldContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder='Team'
-              onChangeText={(text) => setEditableFields({ ...editableFields, team: text })}
-            />
-            <TouchableOpacity onPress={() => handleUpdateField('team')}>
-              <Text style={styles.updateButton}>Update</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Awards details */}
-          <Text style={styles.label}>Leaderboard Points: {profileDetails.leaderboardPoints}</Text>
-
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
 
       <View style={styles.navBar}>
         <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Home')}>
@@ -145,25 +170,49 @@ const ProfilePage: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    backgroundColor: '#fff',
   },
-  text: {
-    fontSize: 30,
-    marginTop: 20,
+  background: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
   },
   scrollContainer: {
     flex: 1,
-    width: '100%',
-  },
-  detailsContainer: {
     padding: 20,
   },
-  label: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginTop: 10,
+  detailsContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
-  fieldContainer: {
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  details: {
+    marginBottom: 10,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  text: {
+    fontSize: 16,
+  },
+  inputContainer: {
+    marginBottom: 20,
+  },
+  inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -171,9 +220,9 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#cccccc',
+    borderColor: '#ccc',
+    borderRadius: 5,
     padding: 10,
-    marginVertical: 10,
   },
   updateButton: {
     color: 'blue',
@@ -181,20 +230,22 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 10,
   },
-  navButton: {
-    padding: 10,
-  },
   navBar: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#fff',
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+    padding: 10,
+  },
+  navButton: {
     padding: 10,
   },
   navBarText: {
-    fontSize: 20,
+    fontSize: 16,
     color: '#333',
   },
 });

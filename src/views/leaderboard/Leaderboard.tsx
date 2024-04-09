@@ -89,31 +89,32 @@ const ViewLeaderboard = () => {
     );
 };
 
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff', // Set background color
+        backgroundColor: '#fff',
         paddingHorizontal: 20,
-        paddingTop: 20, // Add padding to the top to avoid overlap with status bar
+        paddingTop: 20, 
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 20,
-        textAlign: 'center', // Center-align the title
+        textAlign: 'center', 
     },
     userContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 10,
-        paddingVertical: 10, // Add vertical padding for better spacing
-        backgroundColor: '#f5f5f5', // Add a light background color for each user container
-        borderRadius: 8, // Add border radius for rounded corners
+        paddingVertical: 10, 
+        backgroundColor: '#f5f5f5', 
+        borderRadius: 8, 
     },
     userName: {
         marginRight: 10,
         fontSize: 18,
-        flex: 1, // Let user name take remaining space
+        flex: 1, 
     },
     userPoints: {
         fontSize: 18,
@@ -133,16 +134,18 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         width: '100%',
-        backgroundColor: '#f0f0f0',
-        paddingVertical: 10, // Adjust vertical padding for better spacing
-    },
-    navButton: {
-        paddingHorizontal: 20, // Add horizontal padding for better button appearance
-    },
-    navBarText: {
-        fontSize: 18, // Decrease font size for navigation buttons
+        backgroundColor: '#fff',
+        borderTopWidth: 1,
+        borderTopColor: '#ddd',
+        padding: 10,
+      },
+      navButton: {
+        padding: 10,
+      },
+      navBarText: {
+        fontSize: 16,
         color: '#333',
-    },
+      },
 });
 
 export default ViewLeaderboard;

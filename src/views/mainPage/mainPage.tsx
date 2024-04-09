@@ -181,15 +181,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#fff',
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
     padding: 10,
-
   },
   navButton: {
     padding: 10,
   },
   navBarText: {
-    fontSize: 20,
+    fontSize: 16,
     color: '#333',
   },
     messageBox: {

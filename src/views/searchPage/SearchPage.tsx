@@ -70,7 +70,6 @@ const SearchPage: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>Search Employees</Text>
       <TextInput
         style={styles.searchInput}
         placeholder="Search Employees"
@@ -108,63 +107,51 @@ const SearchPage: React.FC = () => {
   );
 };
 
-// Update StyleSheet to define styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: '#F5F5F5',
   },
-  text: {
-    fontSize: 30,
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
     marginTop: 20,
-    marginBottom: 20,
+    marginBottom: 10,
     color: '#333',
   },
   searchInput: {
+    marginTop: 20,
     width: '90%',
     height: 50,
-    borderWidth: 2,
-    borderColor: '#333',
+    borderWidth: 1,
+    borderColor: '#ccc',
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 10,
-    fontSize: 20,
-
+    fontSize: 18,
+    backgroundColor: '#fff',
   },
   employeeList: {
     flex: 1,
     width: '100%',
+    marginBottom: 10,
   },
   employeeItem: {
-    padding: 20,
-    borderTopWidth: 1,
-    borderTopColor: '#333',
+    padding: 15,
+    backgroundColor: '#fff',
+    marginBottom: 10,
+    borderRadius: 10,
+    elevation: 2,
   },
   employeeName: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
   },
-  employeeDepartment: {
+  employeeDetails: {
     fontSize: 16,
-    color: 'grey',
-  },
-  navBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
-    backgroundColor: '#f0f0f0',
-    padding: 10,
-
-  },
-  navButton: {
-    padding: 10,
-  },
-  navBarText: {
-    fontSize: 20,
-    color: '#333',
+    color: '#666',
   },
   messageButton: {
     backgroundColor: '#007bff',
@@ -177,7 +164,25 @@ const styles = StyleSheet.create({
   messageButtonText: {
     color: '#fff',
     fontWeight: 'bold',
-  },  
+  },
+  navBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    backgroundColor: '#fff',
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+    paddingVertical: 10,
+  },
+  navButton: {
+    paddingHorizontal: 20,
+  },
+  navBarText: {
+    fontSize: 16,
+    color: '#333',
+  },
 });
 
 export default SearchPage;
