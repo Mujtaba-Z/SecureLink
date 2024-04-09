@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { Register } from "../../controller/authentication/Authentication.tsx";
 import UserInformation from '../../model/UserInformation.js';
 import { useNavigation } from '@react-navigation/native';
@@ -44,6 +44,10 @@ const SignupPage = () => {
         }
     };
 
+    const handleLoginNavigation = () => {
+        navigation.navigate('Login');
+    };
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Sign Up</Text>
@@ -65,13 +69,6 @@ const SignupPage = () => {
                 placeholder="Name"
                 onChangeText={setName}
                 value={name}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Employee ID"
-                onChangeText={setEmployeeID}
-                value={employeeID}
-                keyboardType="numeric"
             />
             <TextInput
                 style={styles.input}
@@ -105,7 +102,14 @@ const SignupPage = () => {
                 value={DOB}
                 keyboardType="numeric"
             />
-            <Button title="Sign Up" onPress={handleSignup} />
+            <TouchableOpacity style={styles.button} onPress={handleSignup}>
+                <Text style={styles.buttonText}>Sign Up</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.loginButton} onPress={handleLoginNavigation}>
+                <Text style={styles.buttonText}>Go to Login</Text>
+            </TouchableOpacity>
+            
         </View>
     );
 };
@@ -117,19 +121,43 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 20,
+        backgroundColor: '#fff',
     },
     title: {
-        fontSize: 24,
+        fontSize: 35,
         fontWeight: 'bold',
         marginBottom: 20,
+        color: '#333',
     },
     input: {
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 5,
-        padding: 10,
-        marginBottom: 10,
+        padding: 12,
+        marginBottom: 15,
         width: '100%',
+        backgroundColor: '#f9f9f9',
+    },
+    button: {
+        backgroundColor: '#007bff',
+        paddingVertical: 15,
+        paddingHorizontal: 20,
+        borderRadius: 5,
+        width: '100%',
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    loginButton: {
+        backgroundColor: '#28a745',
+        paddingVertical: 15,
+        paddingHorizontal: 20,
+        borderRadius: 5,
+        width: '100%',
+        alignItems: 'center',
     },
 });
 

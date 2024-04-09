@@ -77,7 +77,7 @@ const SearchPage: React.FC = () => {
       // Navigate to the chat page
       if (chatDocRef.id) {
 
-        navigation.navigate('ChatPage', { chatId: chatDocRef.id, chatName: employee.name, employeeId: employeeId, currentUserId: currentUserId});
+        navigation.navigate('ChatPage', { chatID: chatDocRef.id, chatName: employee.name, employeeId: employeeId, currentUserId: currentUserId});
       } else {
         console.error("Failed to navigate: No chatDocRef ID.");
       }

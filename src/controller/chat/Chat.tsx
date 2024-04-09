@@ -97,17 +97,23 @@ export const sendMessage = async (chatID, employee, message) => {
 // Function to retrieve chat data
 export const fetchChatData = async (chatID) => {
   try {
-
     // Get the chat document
-    const chatDocRef = doc(db, 'chats', chatID);
-    const chatDocSnapshot = await getDoc(chatDocRef);
-    const chatData = chatDocSnapshot.data().chatLog;
-    const messagesArray = Object.values(chatData);
+    const querySnapshot = await getDocs(collection(db, 'chats'));
+    let chatData = {};
 
-    return messagesArray;
+    // Iterate through each chat and check if it matches the chat ID
+    await Promise.all(querySnapshot.docs.map(async (doc) => {
+      const chat = doc.data();
+      if (chat.chatID === chatID) {
+        chatData = chat;
+      }
+    }
+
+    ));
+    return chatData;
   } catch (error) {
     console.error("Failed to fetch chat data:", error);
-    return error;
+    return [];
   }
 };
 

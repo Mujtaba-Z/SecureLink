@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {db} from '../../controller/firebase.js';
 import {getDocs, collection, onSnapshot, query} from 'firebase/firestore';
+import { getEmployeeName } from '../../controller/accountManager/AccountManager.tsx';
 
 const MainPage: React.FC = () => {
   const navigation = useNavigation();
@@ -13,11 +14,13 @@ const MainPage: React.FC = () => {
   const [chats,setChats] = useState(null);
   const [employeeID, setEmployeeID] = useState("");
   const [currentUserId, setCurrentUserId] = useState("");
+  const [chatN, setChatN] = useState("");
+
 
 
   // function for navigating to different screens
   const handleChatPress = (chatName: string, chatter2: string, chatID: string ) => {
-    navigation.navigate('ChatPage', { chatId: chatID, chatName: chatName, employeeId: chatter2, currentUserId: employeeID});
+    navigation.navigate('ChatPage', { chatID: chatID, chatName: chatN, employeeId: chatter2, currentUserId: employeeID});
   };
 
   // function for navigating to different screens
@@ -43,20 +46,23 @@ const MainPage: React.FC = () => {
         const unsubscribe = onSnapshot(collection(db, "chats"), (querySnapShot) => {
           const chatRooms = querySnapShot.docs.map(doc => doc.data());
           const availableChats = [];
-          const userChats = chatRooms.filter(room => {
+          const userChats = chatRooms.filter(async room => {
             if(room.Chatter1 === employeeID || room.Chatter2 === employeeID){
 
             availableChats.push(room);
           }
             if(room.Chatter1 === employeeID){
               setCurrentUserId(room.Chatter1);
+              const name = await getEmployeeName(room.Chatter2);
+              setChatN(name);
             } else if(room.Chatter2 === employeeID){
               setCurrentUserId(room.Chatter2);
+              const name = await getEmployeeName(room.Chatter1);
+              setChatN(name);
             }
             return room.Chatter1 === employeeID || room.Chatter2 === employeeID;
           });       
           setChats(availableChats);
-          console.log(chats);
           setIsLoading(false);
         });
         return unsubscribe;
@@ -81,7 +87,8 @@ const MainPage: React.FC = () => {
         room={room} 
         index={index} 
         employeeID={employeeID} 
-        handleChatPress={() => handleChatPress(room.name, currentUserId, room.id)}
+        handleChatPress={() => handleChatPress(room.name, currentUserId, room.chatID)}
+        name={chatN}
       />
       ))}
   </>
@@ -108,12 +115,12 @@ const MainPage: React.FC = () => {
 };
 
 // MessageCard component
-const MessageCard = ({ room, index, employeeID, handleChatPress }) => {
+const MessageCard = ({ room, index, employeeID, handleChatPress, name }) => {
   return (
     <TouchableOpacity style={styles.messageBox} onPress={() => handleChatPress(room.name)}>
       <Text style={styles.messageNumber}>{index + 1}</Text>
       <View style={{ flex: 1 }}>
-        <Text style={styles.messageName}>{room.name}</Text>
+        <Text style={styles.messageName}>{name}</Text>
         <Text style={styles.messageText}>{room.Chatter1 === employeeID ? room.Chatter2 : room.Chatter1}</Text>
       </View>
     </TouchableOpacity>

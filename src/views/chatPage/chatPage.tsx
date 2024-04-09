@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, FlatList, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { sendMessage,fetchChatData } from '../../controller/chat/Chat';
@@ -6,7 +6,7 @@ import { sendMessage,fetchChatData } from '../../controller/chat/Chat';
 // Define the types for the route parameters
 type ChatPageRouteParamList = {
   ChatPage: {
-    chatId: string;
+    chatID: string;
     chatName: string;
     employeeId: string;
     currentUserId: string;
@@ -17,7 +17,7 @@ const ChatPage: React.FC = () => {
 
   // Get the route parameters
   const route = useRoute<RouteProp<ChatPageRouteParamList, 'ChatPage'>>();
-  const { chatName, employeeId, currentUserId, chatId } = route.params;
+  const { chatName, employeeId, currentUserId, chatID } = route.params;
 
   // State variables to store the message, and the list of messages
   const [message, setMessage] = useState('');
@@ -26,23 +26,46 @@ const ChatPage: React.FC = () => {
   // Function to send a message
   const sendMessages = () => {
     if (message.trim().length > 0) {
-      sendMessage(chatId,currentUserId,message);
-      setMessages([...messages, message]);
+      sendMessage(chatID, currentUserId, message);
       setMessage('');
+      fetchChat();
     }
   };
-
   
+  const fetchChat = useCallback(async () => {
+    const chatData = await fetchChatData(chatID);
+    const messagesArray = Object.entries(chatData.chatLog).map(([key, value]) => {
+      return {
+        id: key, // Unique key for each message
+        sender: value.sender,
+        message: value.message,
+      };
+    });
+    setMessages(messagesArray);
+  }, [chatID]);
+
+  // useEffect to get chat data
+  useEffect(() => {
+    fetchChat();
+  }, [fetchChat]);
+
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.chatName}>{chatName}</Text>
+      {/* Display the messages */}
+      {messages.length === 0 && <Text>No messages yet</Text>}
       <FlatList
-        data={messages}
-        renderItem={({ item }) => <Text style={styles.message}>{item}</Text>}
-        keyExtractor={(item, index) => index.toString()}
-        style={styles.messagesList}
-      />
+  data={messages}
+  renderItem={({ item }) => (
+    <View style={item.sender === currentUserId ? styles.currentUserMessageContainer : styles.employeeMessageContainer}>
+      <Text style={styles.message}>{item.message}</Text>
+    </View>
+  )}
+  keyExtractor={(item, index) => index.toString()}
+  style={styles.messagesList}
+/>
+
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Type a message..."
@@ -102,6 +125,14 @@ const styles = StyleSheet.create({
   sendButtonText: {
     color: '#fff',
     fontSize: 16,
+  },
+  currentUserMessageContainer: {
+    alignSelf: 'flex-end', // Aligns messages sent by the current user to the right side
+    marginVertical: 4,
+  },
+  employeeMessageContainer: {
+    alignSelf: 'flex-start', // Aligns messages sent by the employee to the left side
+    marginVertical: 4,
   },
 });
 
