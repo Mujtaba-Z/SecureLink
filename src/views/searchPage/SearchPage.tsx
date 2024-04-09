@@ -9,10 +9,11 @@ import CommunicationSession from '../../model/CommunicationSession.js';
 const SearchPage: React.FC = () => {
   const navigation = useNavigation();
 
-  // State variables to store search query and filtered employees
+  // State variables to store search query and filtered employees, and error message
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filteredEmployees, setFilteredEmployees] = useState<any[]>([]);
   const [employeeID, setEmployeeID] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // useEffect to handle search query changes
   useEffect(() => {
@@ -44,27 +45,39 @@ const SearchPage: React.FC = () => {
     }
   };
 
+  // useEffect to get employee ID only once
   useEffect(() => {
     const fetchEmployeeID = async () => {
       const eID = await getEmployeeID(); 
       setEmployeeID(eID);
     }
     fetchEmployeeID();
-    console.log("Employee ID:", employeeID);
   }, []);
 
   // function to handle messaging
   const handleMessage = async (employee: any) => {
+
     const currentUserId = employeeID;
     const employeeId = employee.employeeId;
 
+    // Create a new chat session
     const sessionReg = new CommunicationSession(currentUserId, employeeId);
-    console.log("employee messaged: " + employee)
     try {
-    console.log("messaging: " + employee.employeeId)
       const chatDocRef = await createChat(sessionReg);
+
+      // If chat already exists, show an error message
+      if (chatDocRef === false) {
+        setErrorMessage("Chat Already Exists!");
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
+        return;
+      }
+
+      // Navigate to the chat page
       if (chatDocRef.id) {
-        navigation.navigate('ChatPage', { chatId: chatDocRef.id, chatName: employee.name });
+
+        navigation.navigate('ChatPage', { chatId: chatDocRef.id, chatName: employee.name, employeeId: employeeId, currentUserId: currentUserId});
       } else {
         console.error("Failed to navigate: No chatDocRef ID.");
       }
@@ -93,6 +106,12 @@ const SearchPage: React.FC = () => {
       </TouchableOpacity>
     </View>
   ))}
+      {/* Timed error message */}
+      {errorMessage && (
+        <View style={styles.errorMessageContainer}>
+          <Text style={styles.errorMessageText}>{errorMessage}</Text>
+        </View>
+      )}
 </ScrollView>
       <View style={styles.navBar}>
         <TouchableOpacity style={styles.navButton} onPress={() => handlePress('Home')}>
@@ -187,6 +206,18 @@ const styles = StyleSheet.create({
   navBarText: {
     fontSize: 16,
     color: '#333',
+  },
+  errorMessageContainer: {
+    position: 'absolute',
+    bottom: 20,
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 5,
+    alignSelf: 'center',
+  },
+  errorMessageText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });
 

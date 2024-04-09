@@ -14,8 +14,9 @@ const MainPage: React.FC = () => {
   const [employeeID, setEmployeeID] = useState("");
 
 
-  const handleChatPress = (chatName: string) => {
-    navigation.navigate('ChatPage', { chatName });
+  // function for navigating to different screens
+  const handleChatPress = (chatName: string, chatter2: string, chatID: string ) => {
+    navigation.navigate('ChatPage', { chatId: chatID, chatName: chatName, employeeId: chatter2, currentUserId: employeeID});
   };
 
   // function for navigating to different screens
@@ -35,21 +36,18 @@ const MainPage: React.FC = () => {
       });
     }, []);
 
+    // useEffect to get chat rooms
     useEffect(() => {
       if (employeeID) {
         const unsubscribe = onSnapshot(collection(db, "chats"), (querySnapShot) => {
           const chatRooms = querySnapShot.docs.map(doc => doc.data());
+          const availableChats = [];
           const userChats = chatRooms.filter(room => {
-            // Check if room.participants exists and is an array
-            if (Array.isArray(room.participants)) {
-              // Check if employeeID exists in the participants array
-              return room.participants.includes(employeeID);
-            } else {
-              // Handle cases where participants array doesn't exist or is not in the expected format
-              return false;
-            }
+            availableChats.push(room);
+            return room.Chatter1 === employeeID || room.Chatter2 === employeeID;
           });       
-          setChats(userChats);
+          setChats(availableChats);
+          console.log(chats);
           setIsLoading(false);
         });
         return unsubscribe;
@@ -57,23 +55,6 @@ const MainPage: React.FC = () => {
     }, [employeeID]);
 
 
-
-//   const chats = [
-//     { name: 'Chat 1', lastMessage: 'text', time: '3:45 PM' },
-//     { name: 'Chat 2', lastMessage: 'Hi?', time: 'Yesterday' },
-//     { name: 'Chat 3', lastMessage: 'fsao', time: '2 days ago' },
-//   ];
-//
-//     useEffect(() => {
-//       // Check if user is logged in
-//       AsyncStorage.getItem('token').then((token) => {
-//         if (!token) {
-//           navigation.navigate('Login');
-//         }
-//       });
-//     }, []);
-
-// Return the JSX
   return (
     <SafeAreaView style={styles.container}>
     <SafeAreaView style={styles.rowContainer}>
@@ -83,17 +64,20 @@ const MainPage: React.FC = () => {
       
       {/* Chat List */}
     <>
-      {chats && chats.length > 0 ? (
-        <>
-            {chats.map((room, index) => (
-              <MessageCard key={room._id} room={room} index={index} />
-            ))}
-        </>
-      ) : null}
+    {chats && chats.length > 0 ? (
+  <>
+      {chats.map((room, index) => (
+        <MessageCard 
+        key={`${room.Chatter1}-${room.Chatter2}`} 
+        room={room} 
+        index={index} 
+        employeeID={employeeID} 
+        handleChatPress={() => handleChatPress(room.name, room.Chatter2, room.id)}
+      />
+      ))}
+  </>
+) : null}
     </>
-
-
-
 
       {/* Bottom Navigation Bar */}
       <View style={styles.navBar}>
@@ -114,67 +98,76 @@ const MainPage: React.FC = () => {
   );
 };
 
-
 // MessageCard component
-const MessageCard = ({ room, index }) => {
+const MessageCard = ({ room, index, employeeID, handleChatPress }) => {
   return (
-    <TouchableOpacity style={styles.messageBox}>
+    <TouchableOpacity style={styles.messageBox} onPress={() => handleChatPress(room.name)}>
       <Text style={styles.messageNumber}>{index + 1}</Text>
-      <Text style={styles.messageText}>{room.lastMessage}</Text>
+      <View style={{ flex: 1 }}>
+        <Text style={styles.messageName}>{room.name}</Text>
+        <Text style={styles.messageText}>{room.Chatter1 === employeeID ? room.Chatter2 : room.Chatter1}</Text>
+      </View>
     </TouchableOpacity>
   );
 };
 
-
-
-
-// Update StyleSheet to define styles
+// Styles
 const styles = StyleSheet.create({
   container: {
-  padding: 10,
+    padding: 10,
     flex: 1,
     alignItems: 'center',
+    backgroundColor: '#f8f8f8', 
   },
   rowContainer: {
+    marginTop: 20, 
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 20,
   },
   mainPageLogo: {
-    marginTop: 20,
     width: 50,
     height: 50,
+    marginRight: 10,
   },
   text: {
-    fontSize: 38,
-    marginTop: 35,
-    marginBottom: 20,
+    fontSize: 32,
     color: '#333',
+    fontWeight: 'bold', 
   },
   chatList: {
     flex: 1,
     width: '100%',
+    marginTop: 20, 
   },
-  chatItem: {
-    padding: 20,
-    borderTopWidth: 2,
-    borderTopColor: '#333',
+  messageBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 20, 
+    backgroundColor: '#fff', 
+    borderRadius: 10, 
+    marginBottom: 10, 
+    elevation: 2, 
+    shadowColor: '#000', 
+    shadowOpacity: 0.2, 
+    shadowRadius: 3, 
+    shadowOffset: { width: 0, height: 2 }, 
   },
-  chatName: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#333',
+  messageNumber: {
+    fontSize: 18, 
+    fontWeight: 'bold', 
+    marginRight: 10,
+    color: '#333', 
   },
-  lastMessage: {
-    fontSize: 16,
-    color: 'grey',
+  messageName: {
+    fontSize: 16, 
+    fontWeight: 'bold', 
+    color: '#333', 
   },
-  time: {
-    fontSize: 14,
-    color: 'grey',
-    textAlign: 'right',
-    position: 'absolute',
-    right: 20,
-    top: 20,
+  messageText: {
+    flex: 1,
+    fontSize: 14, 
+    color: '#666', 
   },
   navBar: {
     flexDirection: 'row',
@@ -185,29 +178,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderTopWidth: 1,
     borderTopColor: '#ddd',
-    padding: 10,
+    paddingVertical: 10,
   },
   navButton: {
-    padding: 10,
+    paddingHorizontal: 20, 
   },
   navBarText: {
     fontSize: 16,
     color: '#333',
   },
-    messageBox: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      padding: 10,
-      borderBottomWidth: 1,
-      borderBottomColor: '#ccc',
-    },
-    messageNumber: {
-      fontWeight: 'bold',
-      marginRight: 10,
-    },
-    messageText: {
-      flex: 1,
-    },
 });
+
 
 export default MainPage;

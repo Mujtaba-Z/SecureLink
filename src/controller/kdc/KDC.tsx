@@ -6,6 +6,7 @@ export const generateKeys = async () => {
   return { userKey };
 };
 
+// encryptSessionKey  used to encrypt session key 
 export const encryptSessionKey = async ({ sessionKey, session }) => {
   return Aes.randomKey(16).then(iv => {
     return Aes.encrypt(session, sessionKey, iv, 'aes-256-cbc').then(cipher => ({
@@ -15,19 +16,21 @@ export const encryptSessionKey = async ({ sessionKey, session }) => {
 });
 };
 
+// Function to decrypt a session key
 export const decryptSessionKey = (encryptedSession, sessionKey) => Aes.decrypt(encryptedSession.cipher, sessionKey, encryptedSession.iv, 'aes-256-cbc');
 
 // Function to encrypt a message
-const encryptMessage = async ({ sessionKey, message }) => {
-  const encrypted = await Aes.encrypt(message, sessionKey);
-  return encrypted;
+export const encryptMessage = async ({ sessionKey, message }) => {
+  return Aes.randomKey(16).then(iv => {
+    return Aes.encrypt(message, sessionKey, iv, 'aes-256-cbc').then(cipher => ({
+        cipher,
+        iv,
+    }))
+});
 };
 
 // Function to decrypt a message
-const decryptMessage = async ({ sessionKey, encryptedMessage }) => {
-  const decrypted = await Aes.decrypt(encryptedMessage, sessionKey);
-  return decrypted;
-};
+export const decryptMessage = (encryptedMessage, sessionKey) => Aes.decrypt(encryptedSession.cipher, sessionKey, encryptedSession.iv, 'aes-256-cbc');
 
 // Function to encrypt a token
 const encryptData = (text, key) => {
