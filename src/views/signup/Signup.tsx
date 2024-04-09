@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 
 const SignupPage = () => {
     const navigation = useNavigation();
+
+    // State variables to store user input
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
@@ -16,7 +18,9 @@ const SignupPage = () => {
     const [teamName, setTeamName] = useState('');
     const [DOB, setDOB] = useState('');
 
+    // Default leaderboard points
     const leaderboardPoints = 0;
+
 
     const handleSignup = async () => {
         // Implement signup logic here
@@ -106,6 +110,7 @@ const SignupPage = () => {
     );
 };
 
+// Styles
 const styles = StyleSheet.create({
     container: {
         flex: 1,

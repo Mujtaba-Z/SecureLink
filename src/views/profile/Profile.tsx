@@ -5,22 +5,24 @@ import { getAccountDetails, changeCompanySection, changeJobTitle, changePhone, c
 
 const ProfilePage: React.FC = () => {
   const navigation = useNavigation();
-  const [profileDetails, setProfileDetails] = useState<any>({}); // useState to keep profile details
+
+  // State variables to store profile details and editable fields
+  const [profileDetails, setProfileDetails] = useState<any>({}); 
   const [editableFields, setEditableFields] = useState<any>({
     jobTitle: '',
     companySection: '',
     phone: '',
     team: ''
-  }); // useState for editable field values
+  }); 
   
   // useEffect to get profile details only once
   useEffect(() => {
     async function fetchProfile() {
-      const details = await getAccountDetails(); // Fetch profile details
+      const details = await getAccountDetails(); 
       setProfileDetails(details);
     }
-    fetchProfile(); // Call fetchProfile when component mounts
-  }, []); // Empty dependency array ensures the effect runs only once
+    fetchProfile();
+  }, []);
 
   // function for navigating to different screens
   const handlePress = (destination: string) => {
@@ -42,7 +44,7 @@ const ProfilePage: React.FC = () => {
           await changePhone(profileDetails.employeeID, value);
           break;
         case 'team':
-          await changeTeamName(profileDetails.employeeID, value); // Fixed passing employeeID instead of profileDetails
+          await changeTeamName(profileDetails.employeeID, value);
           break;
         default:
           break;

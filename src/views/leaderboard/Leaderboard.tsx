@@ -3,16 +3,18 @@ import { View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import { fetchLeaderboardData } from '../../controller/leaderboardManager/LeaderboardManager.tsx';
 import { giveAwardsToUsers } from '../../controller/awardsManager/AwardsManager.tsx';
 import { useNavigation } from '@react-navigation/native';
-
 import bronzeMedal from '../../assets/BronzeMedal.png';
 import silverMedal from '../../assets/SilverMedal.png';
 import goldMedal from '../../assets/GoldMedal.png';
 import mvpMedal from '../../assets/MVPMedal.png';
 
 const ViewLeaderboard = () => {
-    const [leaderboardData, setLeaderboardData] = useState([]);
     const navigation = useNavigation();
 
+    // State variable to store leaderboard data
+    const [leaderboardData, setLeaderboardData] = useState([]);
+
+    // useEffect to fetch leaderboard data
     useEffect(() => {
         const fetchLeaderboard = async () => {
             try {
@@ -31,6 +33,7 @@ const ViewLeaderboard = () => {
         fetchLeaderboard();
     }, []);
 
+    // function for navigating to different screens
     const handlePress = (destination: string) => {
         navigation.navigate(destination);
     };
@@ -86,6 +89,7 @@ const ViewLeaderboard = () => {
     );
 };
 
+// Update StyleSheet to define styles
 const styles = StyleSheet.create({
     container: {
         flex: 1,
