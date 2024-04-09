@@ -122,6 +122,7 @@ export const fetchChatData = async (chatID) => {
   }
 };
 
+// Function to check if a chat already exists between two users
 const checkExistingChat = async (chatter1, chatter2) => {
   try {
 
@@ -147,6 +148,7 @@ const checkExistingChat = async (chatter1, chatter2) => {
   }
 };
 
+// Function to delete a chat
 export const deleteChat = async (chatID) => {
   try {
     // Get the chat document

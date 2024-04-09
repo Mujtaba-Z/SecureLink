@@ -12,9 +12,9 @@ class UserInformation {
         this.DOB = DOB;
         this.employeeID = employeeID;
         this.leaderboardPoints = leaderboardPoints;
-        this.awarded = awarded || false; // Default to false if not provided
-        this.awards = awards || []; // Default to empty array if not provided
-        this.sessionKeys = sessionKeys || []; // Default to empty array if not provided
+        this.awarded = awarded || false;
+        this.awards = awards || []; 
+        this.sessionKeys = sessionKeys || [];
 
     }
 }

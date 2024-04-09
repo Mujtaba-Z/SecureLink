@@ -76,7 +76,6 @@ const SearchPage: React.FC = () => {
 
       // Navigate to the chat page
       if (chatDocRef.id) {
-
         navigation.navigate('ChatPage', { chatID: chatDocRef.id, chatName: employee.name, employeeId: employeeId, currentUserId: currentUserId});
       } else {
         console.error("Failed to navigate: No chatDocRef ID.");
@@ -131,6 +130,7 @@ const SearchPage: React.FC = () => {
   );
 };
 
+// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,

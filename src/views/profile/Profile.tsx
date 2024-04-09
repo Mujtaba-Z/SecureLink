@@ -60,21 +60,22 @@ const ProfilePage: React.FC = () => {
     }
   };
 
- // function for deleting the account
- const handleDeleteAccount = async () => {
-  setVerificationModalVisible(true);
-};
+  // function for deleting the account
+  const handleDeleteAccount = async () => {
+    setVerificationModalVisible(true);
+  };
 
-const handleDeleteConfirmation = async () => {
-  try {
-    await deleteAccount(profileDetails.employeeID, email, password);
-    // Navigate to some initial screen after account deletion
-    navigation.navigate('Login');
-  } catch (error) {
-    console.log(error);
-  }
-  setVerificationModalVisible(false);
-};
+  // function for deleting the account after confirmation
+  const handleDeleteConfirmation = async () => {
+    try {
+      await deleteAccount(profileDetails.employeeID, email, password);
+      // Navigate to some initial screen after account deletion
+      navigation.navigate('Login');
+    } catch (error) {
+      console.log(error);
+    }
+    setVerificationModalVisible(false);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -224,6 +225,7 @@ const handleDeleteConfirmation = async () => {
   );
 };
 
+// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,

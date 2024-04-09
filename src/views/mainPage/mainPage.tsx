@@ -50,13 +50,18 @@ const MainPage: React.FC = () => {
     useEffect(() => {
       if (employeeID) {
         const unsubscribe = onSnapshot(collection(db, "chats"), (querySnapShot) => {
+
+          // Get all chat rooms
           const chatRooms = querySnapShot.docs.map(doc => doc.data());
           const availableChats = [];
           const userChats = chatRooms.filter(async room => {
-            if(room.Chatter1 === employeeID || room.Chatter2 === employeeID){
 
+            // Check if the user is part of the chat room
+            if(room.Chatter1 === employeeID || room.Chatter2 === employeeID){
             availableChats.push(room);
-          }
+            }
+
+            // Get the name of the other chatter in the chat room
             if(room.Chatter1 === employeeID){
               setCurrentUserId(room.Chatter1);
               const name = await getEmployeeName(room.Chatter2);

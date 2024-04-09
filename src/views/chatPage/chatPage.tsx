@@ -56,15 +56,15 @@ const ChatPage: React.FC = () => {
       {/* Display the messages */}
       {messages.length === 0 && <Text>No messages yet</Text>}
       <FlatList
-  data={messages}
-  renderItem={({ item }) => (
-    <View style={item.sender === currentUserId ? styles.currentUserMessageContainer : styles.employeeMessageContainer}>
-      <Text style={styles.message}>{item.message}</Text>
-    </View>
-  )}
-  keyExtractor={(item, index) => index.toString()}
-  style={styles.messagesList}
-/>
+        data={messages}
+        renderItem={({ item }) => (
+        <View style={item.sender === currentUserId ? styles.currentUserMessageContainer : styles.employeeMessageContainer}>
+          <Text style={styles.message}>{item.message}</Text>
+        </View>
+        )}
+        keyExtractor={(item, index) => index.toString()}
+        style={styles.messagesList}
+      />
 
       <View style={styles.inputContainer}>
         <TextInput

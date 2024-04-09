@@ -3,6 +3,7 @@ import { getDocs, collection, setDoc, doc, updateDoc } from 'firebase/firestore'
 import AwardsInformation from '../../model/AwardsInformation.js';
 import { set } from 'firebase/database';
 
+// Function to set awards document in the database
 const setAwardsDoc = async (awardsInfo: AwardsInformation) => {
     try {
         // Check if points is undefined, if so, set it to a default value
@@ -19,7 +20,7 @@ const setAwardsDoc = async (awardsInfo: AwardsInformation) => {
     }
 }
 
-
+// Function to give awards to users based on their leaderboard points
 export const giveAwardsToUsers = async () => {
     try {
         // Define award thresholds
