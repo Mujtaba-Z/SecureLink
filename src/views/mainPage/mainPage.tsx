@@ -5,7 +5,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {db} from '../../controller/firebase.js';
 import {getDocs, collection, onSnapshot, query} from 'firebase/firestore';
 import { getEmployeeID } from '../../controller/accountManager/AccountManager.tsx';
-import { get } from 'firebase/database';
 
 const MainPage: React.FC = () => {
   const navigation = useNavigation();
@@ -13,10 +12,6 @@ const MainPage: React.FC = () => {
   const [chats,setChats] = useState(null);
   const [employeeID, setEmployeeID] = useState("");
 
-
-  const handleChatPress = (chatName: string) => {
-    navigation.navigate('ChatPage', { chatName });
-  };
 
   const handlePress = (screen: string) => {
     navigation.navigate(screen);
@@ -31,11 +26,8 @@ const MainPage: React.FC = () => {
       fetchEmployeeID(); // Call fetchProfile when component mounts
       console.log("Employee ID:", employeeID);
       const unsubscribe = onSnapshot(collection(db, "chats"), (querySnapShot) => {
-        console.log("Query snapshot:", querySnapShot.docs);
         const chatRooms = querySnapShot.docs.map(doc => doc.data());
-        console.log("All chat rooms:", chatRooms);
         const userChats = chatRooms.filter(room => room.participants.includes(employeeID));
-        console.log("User's chats:", userChats);
         setChats(userChats);
         setIsLoading(false);
       });
@@ -102,8 +94,14 @@ const MainPage: React.FC = () => {
 
 
 const MessageCard = ({ room, index }) => {
+
+  const navigation = useNavigation();
+  const handleChatPress = (chatName: string) => {
+    navigation.navigate('ChatPage', { chatName });
+  };
+
   return (
-    <TouchableOpacity style={styles.messageBox}>
+    <TouchableOpacity style={styles.messageBox} onPress={() => handleChatPress(room.name)}>
       <Text style={styles.messageNumber}>{index + 1}</Text>
       <Text style={styles.messageText}>{room.lastMessage}</Text>
     </TouchableOpacity>

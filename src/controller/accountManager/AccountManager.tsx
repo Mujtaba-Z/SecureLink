@@ -15,8 +15,6 @@ const getAccountDetails = async () => {
             const userData = doc.data();
             if (userData.accessToken) {
                 const decryptedToken = await decryptToken({ userKey: userKey, encryptedToken: userData.accessToken });
-                console.log(decryptedToken);
-                console.log(decryptedToken === token);
                 if (decryptedToken === token) {
                     result = {
                         employeeID: userData.employeeID,
@@ -70,8 +68,6 @@ const getEmployeeID = async () => {
             const userData = doc.data();
             if (userData.accessToken) {
                 const decryptedToken = await decryptToken({ userKey: userKey, encryptedToken: userData.accessToken });
-                console.log(decryptedToken);
-                console.log(decryptedToken === token);
                 if (decryptedToken === token) {
                     result = userData.employeeID;
                 }
@@ -84,8 +80,6 @@ const getEmployeeID = async () => {
     }
 }
     
-
-
 
 const changeJobTitle = async (employeeID: string, newTitle: string) => {
     try {

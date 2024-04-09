@@ -4,11 +4,7 @@
             "outputFile": "com.awesomeproject.app-mergeDebugResources-38:/values-xlarge-v4/values-xlarge-v4.xml",
             "map": [
                 {
-<<<<<<< HEAD
-                    "source": "C:\\Users\\mujta\\.gradle\\caches\\transforms-3\\858dc591faff319c774fa62ec5f4cdb2\\transformed\\appcompat-1.6.1\\res\\values-xlarge-v4\\values-xlarge-v4.xml",
-=======
-                    "source": "C:\\Users\\Daniel Hu\\.gradle\\caches\\transforms-3\\858dc591faff319c774fa62ec5f4cdb2\\transformed\\appcompat-1.6.1\\res\\values-xlarge-v4\\values-xlarge-v4.xml",
->>>>>>> 2471d869ea60bd2bc4cbd3af4704951c54a3977b
+                    "source": "/Users/kfmoi/.gradle/caches/transforms-3/858dc591faff319c774fa62ec5f4cdb2/transformed/appcompat-1.6.1/res/values-xlarge-v4/values-xlarge-v4.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7",
                         "startColumns": "4,4,4,4,4,4",

@@ -3,11 +3,14 @@ import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity, TextInput, Scro
 import { useNavigation } from '@react-navigation/native';
 import { Search } from '../../controller/search/Search';
 import { createChat } from '../../controller/chat/Chat';
+import CommunicationSession from '../../model/CommunicationSession';
+import { getEmployeeID } from '../../controller/accountManager/AccountManager';
 
 const SearchPage: React.FC = () => {
   const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filteredEmployees, setFilteredEmployees] = useState<any[]>([]);
+  const [employeeID, setEmployeeID] = useState<string>('');
 
   useEffect(() => {
     if (searchQuery.trim() !== '') {
@@ -36,13 +39,24 @@ const SearchPage: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchEmployeeID = async () => {
+      const eID = await getEmployeeID(); 
+      setEmployeeID(eID);
+    }
+    fetchEmployeeID();
+    console.log("Employee ID:", employeeID);
+  }, []);
+
   const handleMessage = async (employee: any) => {
-    const currentUserId = 'wjCtOwAbVJbsBnfclYrXR9NFRA23';
+    const currentUserId = employeeID;
     const employeeId = employee.employeeId;
+
+    const sessionReg = new CommunicationSession(currentUserId, employeeId);
     console.log("employee messaged: " + employee)
     try {
     console.log("messaging: " + employee.employeeId)
-      const chatDocRef = await createChat(currentUserId, employeeId);
+      const chatDocRef = await createChat(sessionReg);
       if (chatDocRef.id) {
         navigation.navigate('ChatPage', { chatId: chatDocRef.id, chatName: employee.name });
       } else {

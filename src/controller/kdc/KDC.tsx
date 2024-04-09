@@ -5,18 +5,16 @@ export const generateKeys = async () => {
   return { userKey };
 };
 
-const establishSession = async ({ userKey, employeeKey }) => {
-  const nonce = await Aes.randomKey(8); // 64 bits = 8 bytes
-
-  const encryptedNonce = await Aes.encrypt(nonce, employeeKey);
-  const decryptedNonce = await Aes.decrypt(encryptedNonce, employeeKey);
-
-  const sessionKey = await Aes.randomKey(16); // 128 bits = 16 bytes
-  const encryptedSessionKey = await Aes.encrypt(sessionKey, userKey);
-  const decryptedSessionKey = await Aes.decrypt(encryptedSessionKey, userKey);
-
-  return decryptedSessionKey;
+export const encryptSessionKey = async ({ sessionKey, session }) => {
+  return Aes.randomKey(16).then(iv => {
+    return Aes.encrypt(session, sessionKey, iv, 'aes-256-cbc').then(cipher => ({
+        cipher,
+        iv,
+    }))
+});
 };
+
+export const decryptSessionKey = (encryptedSession, sessionKey) => Aes.decrypt(encryptedSession.cipher, sessionKey, encryptedSession.iv, 'aes-256-cbc');
 
 const encryptMessage = async ({ sessionKey, message }) => {
   const encrypted = await Aes.encrypt(message, sessionKey);
@@ -52,9 +50,8 @@ export const decryptToken = async ({ userKey, encryptedToken }) => {
 
     return decJson;
   } catch (error) {
-    console.log('Error decrypting token:', error);
   }
 };
 
 
-export default { establishSession, encryptMessage, decryptMessage, encryptToken, decryptToken, generateKeys };
+export default { encryptSessionKey, decryptSessionKey, encryptMessage, decryptMessage, encryptToken, decryptToken, generateKeys };
