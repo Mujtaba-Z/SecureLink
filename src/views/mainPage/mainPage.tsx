@@ -22,26 +22,37 @@ const MainPage: React.FC = () => {
     navigation.navigate(screen);
   };
 
-    useEffect(() => {
-      console.log("Fetching chats...");
-      const fetchEmployeeID = async () => {
-        const eID = await getEmployeeID(); 
-        setEmployeeID(eID);
-      }
-      fetchEmployeeID(); // Call fetchProfile when component mounts
-      console.log("Employee ID:", employeeID);
-      const unsubscribe = onSnapshot(collection(db, "chats"), (querySnapShot) => {
-        console.log("Query snapshot:", querySnapShot.docs);
-        const chatRooms = querySnapShot.docs.map(doc => doc.data());
-        console.log("All chat rooms:", chatRooms);
-        const userChats = chatRooms.filter(room => room.participants.includes(employeeID));
-        console.log("User's chats:", userChats);
-        setChats(userChats);
-        setIsLoading(false);
-      });
+useEffect(() => {
+  console.log("Fetching chats...");
+  const fetchEmployeeID = async () => {
+    const eID = await getEmployeeID();
+    console.log("Employee ID:", eID);
+    setEmployeeID(eID);
+  };
 
-      return unsubscribe;
-    }, []);
+  fetchEmployeeID(); // Call fetchEmployeeID when component mounts
+
+  const unsubscribe = onSnapshot(collection(db, "chats"), (querySnapShot) => {
+    console.log("Query snapshot:", querySnapShot.docs);
+    const chatRooms = querySnapShot.docs.map(doc => doc.data());
+    console.log("All chat rooms:", chatRooms);
+
+    if (employeeID) {
+      const userChats = chatRooms.filter(room =>
+        Array.isArray(room.participants) && room.participants.includes(employeeID)
+      );
+      console.log("User's chats:", userChats);
+      setChats(userChats);
+    } else {
+      console.log("Employee ID is not available yet.");
+    }
+    setIsLoading(false);
+  });
+
+  return unsubscribe;
+}, []);
+
+
 
 
 

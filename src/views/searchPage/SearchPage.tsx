@@ -3,11 +3,14 @@ import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity, TextInput, Scro
 import { useNavigation } from '@react-navigation/native';
 import { Search } from '../../controller/search/Search';
 import { createChat } from '../../controller/chat/Chat';
+import { getEmployeeID } from '../../controller/accountManager/AccountManager.tsx';
 
 const SearchPage: React.FC = () => {
   const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filteredEmployees, setFilteredEmployees] = useState<any[]>([]);
+  const [currEmployeeID, setCurrEmployeeID] = useState("");
+
 
   useEffect(() => {
     if (searchQuery.trim() !== '') {
@@ -36,22 +39,27 @@ const SearchPage: React.FC = () => {
     }
   };
 
-  const handleMessage = async (employee: any) => {
-    const currentUserId = 'wjCtOwAbVJbsBnfclYrXR9NFRA23';
-    const employeeId = employee.employeeId;
-    console.log("employee messaged: " + employee)
-    try {
-    console.log("messaging: " + employee.employeeId)
-      const chatDocRef = await createChat(currentUserId, employeeId);
-      if (chatDocRef.id) {
-        navigation.navigate('ChatPage', { chatId: chatDocRef.id, chatName: employee.name });
-      } else {
-        console.error("Failed to navigate: No chatDocRef ID.");
+    const handleMessage = async (employee: any) => {
+      try {
+        const eID = await getEmployeeID();
+        setCurrEmployeeID(eID);
+        console.log("IN SEARCHPAGE THE CURR USER ID : " + eID);
+
+        const employeeId = employee.employeeId;
+        console.log("employee messaged: " + employee);
+
+        console.log("messaging: " + employee.employeeId);
+        const chatDocRef = await createChat(currEmployeeID, employeeId);
+
+        if (chatDocRef.id) {
+          navigation.navigate('ChatPage', { chatId: chatDocRef.id, chatName: employee.name });
+        } else {
+          console.error("Failed to navigate: No chatDocRef ID.");
+        }
+      } catch (error) {
+        console.error("Failed to create chat:", error);
       }
-    } catch (error) {
-      console.error("Failed to create chat:", error);
-    }
-  };
+    };
 
   return (
     <SafeAreaView style={styles.container}>
