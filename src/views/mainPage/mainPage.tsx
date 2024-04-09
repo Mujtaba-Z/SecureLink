@@ -12,6 +12,7 @@ const MainPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [chats,setChats] = useState(null);
   const [employeeID, setEmployeeID] = useState("");
+  const [currentUserId, setCurrentUserId] = useState("");
 
 
   // function for navigating to different screens
@@ -43,7 +44,15 @@ const MainPage: React.FC = () => {
           const chatRooms = querySnapShot.docs.map(doc => doc.data());
           const availableChats = [];
           const userChats = chatRooms.filter(room => {
+            if(room.Chatter1 === employeeID || room.Chatter2 === employeeID){
+
             availableChats.push(room);
+          }
+            if(room.Chatter1 === employeeID){
+              setCurrentUserId(room.Chatter1);
+            } else if(room.Chatter2 === employeeID){
+              setCurrentUserId(room.Chatter2);
+            }
             return room.Chatter1 === employeeID || room.Chatter2 === employeeID;
           });       
           setChats(availableChats);
@@ -72,7 +81,7 @@ const MainPage: React.FC = () => {
         room={room} 
         index={index} 
         employeeID={employeeID} 
-        handleChatPress={() => handleChatPress(room.name, room.Chatter2, room.id)}
+        handleChatPress={() => handleChatPress(room.name, currentUserId, room.id)}
       />
       ))}
   </>
