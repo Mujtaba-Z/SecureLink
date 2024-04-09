@@ -13,7 +13,7 @@ SecureLink is a secure chat application designed for internal communication with
 
 ## Screenshots
 
-![Screens](src/assets/deviceframes-3.png.png)
+![Alt text](/src/assets/deviceframes-3png?raw=true "Optional Title")
 
 ## Installation
 
