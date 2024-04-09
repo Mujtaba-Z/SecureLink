@@ -1,7 +1,7 @@
 
 // This class is used to store user information. It is used in the UserInformationService.js file to store user information in the database.
 class UserInformation {
-    constructor(employeeID, name, email, password, section, title, phoneNum, teamName, DOB, leaderboardPoints, awarded, awards) {
+    constructor(employeeID, name, email, password, section, title, phoneNum, teamName, DOB, leaderboardPoints, awarded, awards, sessionKeys) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -14,6 +14,8 @@ class UserInformation {
         this.leaderboardPoints = leaderboardPoints;
         this.awarded = awarded || false; // Default to false if not provided
         this.awards = awards || []; // Default to empty array if not provided
+        this.sessionKeys = sessionKeys || []; // Default to empty array if not provided
+
     }
 }
 

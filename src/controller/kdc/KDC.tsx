@@ -6,21 +6,16 @@ export const generateKeys = async () => {
   return { userKey };
 };
 
-// Function to establish a session
-const establishSession = async ({ userKey, employeeKey }) => {
-  const nonce = await Aes.randomKey(8); // 64 bits = 8 bytes
-
-  // Encrypt the nonce using the employee key
-  const encryptedNonce = await Aes.encrypt(nonce, employeeKey);
-  const decryptedNonce = await Aes.decrypt(encryptedNonce, employeeKey);
-
-  // Encrypt the user key using the employee key
-  const sessionKey = await Aes.randomKey(16); // 128 bits = 16 bytes
-  const encryptedSessionKey = await Aes.encrypt(sessionKey, userKey);
-  const decryptedSessionKey = await Aes.decrypt(encryptedSessionKey, userKey);
-
-  return decryptedSessionKey;
+export const encryptSessionKey = async ({ sessionKey, session }) => {
+  return Aes.randomKey(16).then(iv => {
+    return Aes.encrypt(session, sessionKey, iv, 'aes-256-cbc').then(cipher => ({
+        cipher,
+        iv,
+    }))
+});
 };
+
+export const decryptSessionKey = (encryptedSession, sessionKey) => Aes.decrypt(encryptedSession.cipher, sessionKey, encryptedSession.iv, 'aes-256-cbc');
 
 // Function to encrypt a message
 const encryptMessage = async ({ sessionKey, message }) => {
@@ -67,4 +62,4 @@ export const decryptToken = async ({ userKey, encryptedToken }) => {
 };
 
 
-export default { establishSession, encryptMessage, decryptMessage, encryptToken, decryptToken, generateKeys };
+export default { encryptSessionKey, decryptSessionKey, encryptMessage, decryptMessage, encryptToken, decryptToken, generateKeys };

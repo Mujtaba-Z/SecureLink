@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Search } from '../../controller/search/Search';
 import { createChat } from '../../controller/chat/Chat';
 import { getEmployeeID } from '../../controller/accountManager/AccountManager.tsx';
+import CommunicationSession from '../../model/CommunicationSession.js';
 
 const SearchPage: React.FC = () => {
   const navigation = useNavigation();
@@ -43,21 +44,25 @@ const SearchPage: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchEmployeeID = async () => {
+      const eID = await getEmployeeID(); 
+      setEmployeeID(eID);
+    }
+    fetchEmployeeID();
+    console.log("Employee ID:", employeeID);
+  }, []);
+
   // function to handle messaging
   const handleMessage = async (employee: any) => {
+    const currentUserId = employeeID;
+    const employeeId = employee.employeeId;
 
-    const fetchEmployeeID = async () => {
-        const eID = await getEmployeeID();
-        setEmployeeID(eID);
-    }
-
-    fetchEmployeeID()
-    console.log("EMPLOYEE ID IN SEARCHPAGE: " + employeeID)
-    const otherEmployeeId = employee.employeeId;
+    const sessionReg = new CommunicationSession(currentUserId, employeeId);
     console.log("employee messaged: " + employee)
     try {
-    console.log("messaging: " + otherEmployeeId)
-      const chatDocRef = await createChat(employeeID, otherEmployeeId);
+    console.log("messaging: " + employee.employeeId)
+      const chatDocRef = await createChat(sessionReg);
       if (chatDocRef.id) {
         navigation.navigate('ChatPage', { chatId: chatDocRef.id, chatName: employee.name });
       } else {
