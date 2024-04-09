@@ -3,11 +3,13 @@ import { SafeAreaView, Text, StyleSheet, View, TouchableOpacity, TextInput, Scro
 import { useNavigation } from '@react-navigation/native';
 import { Search } from '../../controller/search/Search';
 import { createChat } from '../../controller/chat/Chat';
+import { getEmployeeID } from '../../controller/accountManager/AccountManager.tsx';
 
 const SearchPage: React.FC = () => {
   const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filteredEmployees, setFilteredEmployees] = useState<any[]>([]);
+  const [employeeID, setEmployeeID] = useState("");
 
   useEffect(() => {
     if (searchQuery.trim() !== '') {
@@ -37,12 +39,19 @@ const SearchPage: React.FC = () => {
   };
 
   const handleMessage = async (employee: any) => {
-    const currentUserId = 'wjCtOwAbVJbsBnfclYrXR9NFRA23';
-    const employeeId = employee.employeeId;
+
+    const fetchEmployeeID = async () => {
+        const eID = await getEmployeeID();
+        setEmployeeID(eID);
+    }
+
+    fetchEmployeeID()
+    console.log("EMPLOYEE ID IN SEARCHPAGE: " + employeeID)
+    const otherEmployeeId = employee.employeeId;
     console.log("employee messaged: " + employee)
     try {
-    console.log("messaging: " + employee.employeeId)
-      const chatDocRef = await createChat(currentUserId, employeeId);
+    console.log("messaging: " + otherEmployeeId)
+      const chatDocRef = await createChat(employeeID, otherEmployeeId);
       if (chatDocRef.id) {
         navigation.navigate('ChatPage', { chatId: chatDocRef.id, chatName: employee.name });
       } else {

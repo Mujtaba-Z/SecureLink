@@ -1,20 +1,10 @@
-<<<<<<< HEAD
-#Mon Apr 08 16:46:36 EDT 2024
-base.0=C\:\\Users\\mujta\\Documents\\3rd Year\\SFWRENG 3A04\\SecureLink\\android\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
-base.1=C\:\\Users\\mujta\\Documents\\3rd Year\\SFWRENG 3A04\\SecureLink\\android\\app\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\0\\classes.dex
-base.2=C\:\\Users\\mujta\\Documents\\3rd Year\\SFWRENG 3A04\\SecureLink\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
-base.3=C\:\\Users\\mujta\\Documents\\3rd Year\\SFWRENG 3A04\\SecureLink\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\13\\classes.dex
-base.4=C\:\\Users\\mujta\\Documents\\3rd Year\\SFWRENG 3A04\\SecureLink\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex
-base.5=C\:\\Users\\mujta\\Documents\\3rd Year\\SFWRENG 3A04\\SecureLink\\android\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
-=======
-#Mon Apr 08 18:08:30 EDT 2024
-base.0=C\:\\Users\\Daniel Hu\\Downloads\\SecureLink\\android\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
-base.1=C\:\\Users\\Daniel Hu\\Downloads\\SecureLink\\android\\app\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\0\\classes.dex
-base.2=C\:\\Users\\Daniel Hu\\Downloads\\SecureLink\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
-base.3=C\:\\Users\\Daniel Hu\\Downloads\\SecureLink\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\13\\classes.dex
-base.4=C\:\\Users\\Daniel Hu\\Downloads\\SecureLink\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex
-base.5=C\:\\Users\\Daniel Hu\\Downloads\\SecureLink\\android\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
->>>>>>> 2471d869ea60bd2bc4cbd3af4704951c54a3977b
+#Mon Apr 08 23:31:59 EDT 2024
+base.0=C\:\\Users\\manan_6htah0e\\Desktop\\SecureLink\\android\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+base.1=C\:\\Users\\manan_6htah0e\\Desktop\\SecureLink\\android\\app\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\0\\classes.dex
+base.2=C\:\\Users\\manan_6htah0e\\Desktop\\SecureLink\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.3=C\:\\Users\\manan_6htah0e\\Desktop\\SecureLink\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\13\\classes.dex
+base.4=C\:\\Users\\manan_6htah0e\\Desktop\\SecureLink\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex
+base.5=C\:\\Users\\manan_6htah0e\\Desktop\\SecureLink\\android\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
 path.0=classes.dex
 path.1=0/classes.dex
 path.2=0/classes.dex

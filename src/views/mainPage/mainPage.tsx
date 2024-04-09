@@ -34,8 +34,16 @@ const MainPage: React.FC = () => {
         console.log("Query snapshot:", querySnapShot.docs);
         const chatRooms = querySnapShot.docs.map(doc => doc.data());
         console.log("All chat rooms:", chatRooms);
-        const userChats = chatRooms.filter(room => room.participants.includes(employeeID));
-        console.log("User's chats:", userChats);
+        const userChats = chatRooms.filter(room => {
+            // Check if room.participants exists and is an array
+            if (Array.isArray(room.participants)) {
+                // Check if employeeID exists in the participants array
+                return room.participants.includes(employeeID);
+            } else {
+                // Handle cases where participants array doesn't exist or is not in the expected format
+                return false;
+            }
+        });        console.log("User's chats:", userChats);
         setChats(userChats);
         setIsLoading(false);
       });
@@ -109,6 +117,9 @@ const MessageCard = ({ room, index }) => {
     </TouchableOpacity>
   );
 };
+
+
+
 
 // Update StyleSheet to define styles
 const styles = StyleSheet.create({
