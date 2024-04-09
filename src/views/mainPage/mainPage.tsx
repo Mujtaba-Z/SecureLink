@@ -9,6 +9,8 @@ import { get } from 'firebase/database';
 
 const MainPage: React.FC = () => {
   const navigation = useNavigation();
+
+  // Use state to keep track of loading state, chats, and employee ID
   const [isLoading, setIsLoading] = useState(true);
   const [chats,setChats] = useState(null);
   const [employeeID, setEmployeeID] = useState("");
@@ -18,10 +20,12 @@ const MainPage: React.FC = () => {
     navigation.navigate('ChatPage', { chatName });
   };
 
+  // function for navigating to different screens
   const handlePress = (screen: string) => {
     navigation.navigate(screen);
   };
 
+    // useEffect to get profile details only once
     useEffect(() => {
       console.log("Fetching chats...");
       const fetchEmployeeID = async () => {
@@ -60,14 +64,15 @@ const MainPage: React.FC = () => {
 //       });
 //     }, []);
 
+// Return the JSX
   return (
-
     <SafeAreaView style={styles.container}>
     <SafeAreaView style={styles.rowContainer}>
       <Image source={require('../../assets/securelink-high-resolution-logo-black-transparent.png')} style={styles.mainPageLogo}/>
       <Text style={styles.text}>SecureLink</Text>
     </SafeAreaView>
       
+      {/* Chat List */}
     <>
       {chats && chats.length > 0 ? (
         <>
@@ -101,6 +106,7 @@ const MainPage: React.FC = () => {
 };
 
 
+// MessageCard component
 const MessageCard = ({ room, index }) => {
   return (
     <TouchableOpacity style={styles.messageBox}>
