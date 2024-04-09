@@ -124,8 +124,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     medalImage: {
-        width: 30,
-        height: 30,
+        width: 40,
+        height: 80,
         marginLeft: 5,
     },
     navBar: {

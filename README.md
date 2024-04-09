@@ -1,86 +1,47 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# SecureLink
 
-# Getting Started
+## About
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+SecureLink is a secure chat application designed for internal communication within a company. It provides end-to-end encryption for all messages exchanged between users, ensuring confidentiality and integrity of communication.
 
+## Features
 
-## Requirements
+- End-to-end encryption: All messages are encrypted before being transmitted and decrypted only by the intended recipient.
+- User authentication: Users must authenticate themselves before accessing the chat application.
+- User management: Administrators can manage user accounts, including creating, updating, and deleting accounts.
+- Message history: Users can view their message history within the application.
 
-### Android
+## Screenshots
 
-- **Android Studio**: [Download](https://developer.android.com/studio)
-- **Android Emulator**: [Configure](https://developer.android.com/studio/run/emulator)
-- **JDK**: [Download](https://www.oracle.com/java/technologies/javase-jdk18-downloads.html)
+![Screens](src/assets/deviceframes-3.png.png)
 
 ## Installation
 
-To get started, you will need to install the necessary dependencies. Run the following command from the _root_ of your React Native project:
+### Requirements
 
-```bash
-# using npm
-npm install
-
-# OR using Yarn
-yarn
-```
-
-This will install all the necessary dependencies for your project.
+- React Native development environment
+- Android emulator
+- Java Development Kit 18
 
 
-## Step 1: Start the Metro Server
+### Setup
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+1. Clone the SecureLink repository
+3. Install dependencies: `npm install`
+5. Start the server: `npm start`
+6. Start the React Native app: `npm run android`
 
-To start Metro, run the following command from the _root_ of your React Native project:
+### Usage
 
-```bash
-# using npm
-npm start
+1. Launch the SecureLink app on your device or emulator.
+2. Log in using your credentials.
+3. Start a new chat.
+4. Send and receive messages securely.
 
-# OR using Yarn
-yarn start
-```
+## Contributing
 
-## Step 2: Start your Application
+Contributions are welcome! Feel free to submit bug reports, feature requests, or pull requests through the GitHub repository.
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+## License
 
-### For Android
-
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### For iOS
-
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
