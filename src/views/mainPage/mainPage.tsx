@@ -4,8 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {db} from '../../controller/firebase.js';
 import {getDocs, collection, onSnapshot, query} from 'firebase/firestore';
-import { getEmployeeID } from '../../controller/accountManager/AccountManager.tsx';
-import { get } from 'firebase/database';
 
 const MainPage: React.FC = () => {
   const navigation = useNavigation();
@@ -27,34 +25,36 @@ const MainPage: React.FC = () => {
 
     // useEffect to get profile details only once
     useEffect(() => {
-      console.log("Fetching chats...");
-      const fetchEmployeeID = async () => {
-        const eID = await getEmployeeID(); 
-        setEmployeeID(eID);
-      }
-      fetchEmployeeID(); // Call fetchProfile when component mounts
-      console.log("Employee ID:", employeeID);
-      const unsubscribe = onSnapshot(collection(db, "chats"), (querySnapShot) => {
-        console.log("Query snapshot:", querySnapShot.docs);
-        const chatRooms = querySnapShot.docs.map(doc => doc.data());
-        console.log("All chat rooms:", chatRooms);
-        const userChats = chatRooms.filter(room => {
-            // Check if room.participants exists and is an array
-            if (Array.isArray(room.participants)) {
-                // Check if employeeID exists in the participants array
-                return room.participants.includes(employeeID);
-            } else {
-                // Handle cases where participants array doesn't exist or is not in the expected format
-                return false;
-            }
-        });        console.log("User's chats:", userChats);
-        setChats(userChats);
-        setIsLoading(false);
+      // Get the employee ID from AsyncStorage
+      AsyncStorage.getItem('employeeID').then((id) => {
+        if (id) {
+          setEmployeeID(id);
+        } else {
+          console.log("Employee ID not found");
+        }
       });
-
-      return unsubscribe;
     }, []);
 
+    useEffect(() => {
+      if (employeeID) {
+        const unsubscribe = onSnapshot(collection(db, "chats"), (querySnapShot) => {
+          const chatRooms = querySnapShot.docs.map(doc => doc.data());
+          const userChats = chatRooms.filter(room => {
+            // Check if room.participants exists and is an array
+            if (Array.isArray(room.participants)) {
+              // Check if employeeID exists in the participants array
+              return room.participants.includes(employeeID);
+            } else {
+              // Handle cases where participants array doesn't exist or is not in the expected format
+              return false;
+            }
+          });       
+          setChats(userChats);
+          setIsLoading(false);
+        });
+        return unsubscribe;
+      }
+    }, [employeeID]);
 
 
 //   const chats = [

@@ -16,8 +16,6 @@ const setAwardsDoc = async (awardsInfo: AwardsInformation) => {
             points: points // Use the points variable which now contains a defined value
         });
     } catch (error) {
-        console.log('Awards', awardsInfo);
-        console.error('Error setting awards doc:', error);
     }
 }
 

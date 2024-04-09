@@ -19,6 +19,7 @@ const Login = async (email: string, password: string) => {
         const { userKey } = await generateKeys();
         await AsyncStorage.setItem('token', token);
         await AsyncStorage.setItem('userKey', userKey);
+        await AsyncStorage.setItem('employeeID', user.uid);
 
         // Encrypt the token and update the user's document in the database
         const encryptedToken = await encryptToken({ userKey: userKey, token });

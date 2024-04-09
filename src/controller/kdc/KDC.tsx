@@ -63,7 +63,6 @@ export const decryptToken = async ({ userKey, encryptedToken }) => {
 
     return decJson;
   } catch (error) {
-    console.log('Error decrypting token:', error);
   }
 };
 
