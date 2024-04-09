@@ -102,14 +102,24 @@ const SignupPage = () => {
                 value={DOB}
                 keyboardType="numeric"
             />
-            <TouchableOpacity style={styles.button} onPress={handleSignup}>
-                <Text style={styles.buttonText}>Sign Up</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.loginButton} onPress={handleLoginNavigation}>
-                <Text style={styles.buttonText}>Go to Login</Text>
-            </TouchableOpacity>
-            
+            <View>
+                <Button
+                    title="Register"
+                    onPress={handleSignup}
+                    borderRadius={15}
+                    width={280}
+                    height={40}
+                  />
+            </View>
+            <View>
+                <Button
+                    title="Back to login"
+                    onPress={handleLoginNavigation}
+                    borderRadius={15}
+                    width={280}
+                    height={40}
+                  />
+            </View>
         </View>
     );
 };

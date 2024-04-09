@@ -93,6 +93,16 @@ export const sendMessage = async (chatID, employee, message) => {
     await setDoc(chatDocRef, {
       [key]: data
     }, { merge: true });
+
+     // Update sender's leaderboardPoints
+    const senderDocRef = doc(db, 'users', employee); // Assuming employee is the employeeID
+    const senderDocSnapshot = await getDoc(senderDocRef);
+    const senderData = senderDocSnapshot.data();
+    const newLeaderboardPoints = (senderData.leaderboardPoints || 0) + 1; // Increment by 1
+    await updateDoc(senderDocRef, {
+      leaderboardPoints: newLeaderboardPoints
+    });
+
   } catch (error) {
     console.error("Failed to send message:", error);
     return error;
