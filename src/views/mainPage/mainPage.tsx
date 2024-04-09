@@ -88,7 +88,7 @@ const MainPage: React.FC = () => {
         index={index} 
         employeeID={employeeID} 
         handleChatPress={() => handleChatPress(room.name, currentUserId, room.chatID)}
-        name={chatN}
+        name={room.Chatter1 === employeeID ? room.chatter2Name : room.chatter1Name}
       />
       ))}
   </>

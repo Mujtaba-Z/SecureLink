@@ -1,7 +1,7 @@
 import { db } from '../firebase';
 import { collection, addDoc, serverTimestamp, updateDoc, getDocs, arrayUnion, doc, getDoc, setDoc } from 'firebase/firestore';
 import { generateKeys, encryptSessionKey,encryptMessage, decryptMessage } from '../kdc/KDC';
-import { getEmployeeName } from '../accountManager/AccountManager';
+import { getEmployeeName } from '../accountManager/AccountManager.tsx';
 
 // Function to create a new chat
 export const createChat = async (sessionData) => {
@@ -24,6 +24,10 @@ export const createChat = async (sessionData) => {
     const { userKey } = await generateKeys();
     const sessionName = session.chatter1 + session.chatter2;
     const encryptedSession = await encryptSessionKey({ sessionKey: userKey , session: sessionName });
+
+    // get employee names
+    const chatter1Name = await getEmployeeName(session.chatter1);
+    const chatter2Name = await getEmployeeName(session.chatter2);
     
     // Add chat document
     const chatDocRef = await addDoc(collection(db, 'chats'), {
@@ -32,7 +36,8 @@ export const createChat = async (sessionData) => {
       chatLog: [],
       creationTime: serverTimestamp(),
       encryptionSession: encryptedSession,
-      name: employeeName,
+      chatter1Name: chatter1Name,
+      chatter2Name: chatter2Name
     });
 
     // add chat ID to chat documents
