@@ -89,35 +89,43 @@ const ViewLeaderboard = () => {
     );
 };
 
-// Update StyleSheet to define styles
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        backgroundColor: '#fff', // Set background color
         paddingHorizontal: 20,
+        paddingTop: 20, // Add padding to the top to avoid overlap with status bar
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 20,
+        textAlign: 'center', // Center-align the title
     },
     userContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 10,
+        paddingVertical: 10, // Add vertical padding for better spacing
+        backgroundColor: '#f5f5f5', // Add a light background color for each user container
+        borderRadius: 8, // Add border radius for rounded corners
     },
     userName: {
         marginRight: 10,
         fontSize: 18,
+        flex: 1, // Let user name take remaining space
     },
     userPoints: {
         fontSize: 18,
     },
+    medalsContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
     medalImage: {
-        width: 30, // Adjust the width and height according to your design
+        width: 30,
         height: 30,
-        marginLeft: 5, // Add some spacing between medal images and user information
+        marginLeft: 5,
     },
     navBar: {
         flexDirection: 'row',
@@ -126,13 +134,13 @@ const styles = StyleSheet.create({
         bottom: 0,
         width: '100%',
         backgroundColor: '#f0f0f0',
-        padding: 10,
+        paddingVertical: 10, // Adjust vertical padding for better spacing
     },
     navButton: {
-        padding: 10,
+        paddingHorizontal: 20, // Add horizontal padding for better button appearance
     },
     navBarText: {
-        fontSize: 20,
+        fontSize: 18, // Decrease font size for navigation buttons
         color: '#333',
     },
 });

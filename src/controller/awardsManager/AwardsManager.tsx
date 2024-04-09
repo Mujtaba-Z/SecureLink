@@ -46,7 +46,7 @@ export const giveAwardsToUsers = async () => {
                 }
             });
 
-            const points = userData.points || 0;
+            const points = userData.leaderboardPoints || 0;
 
             // Award users
             if (bestAward !== null) {
