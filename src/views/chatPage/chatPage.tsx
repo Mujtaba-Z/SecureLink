@@ -47,6 +47,12 @@ const ChatPage: React.FC = () => {
   // useEffect to get chat data
   useEffect(() => {
     fetchChat();
+
+    // Set up interval to fetch chat every second
+    const intervalId = setInterval(fetchChat, 1000);
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(intervalId);
   }, [fetchChat]);
 
 
